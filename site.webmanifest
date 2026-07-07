@@ -1,0 +1,16 @@
+{
+  "name": "Baholo Projects",
+  "short_name": "Baholo",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#090909",
+  "theme_color": "#f58220",
+  "icons": [
+    {
+      "src": "assets/baholo-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
