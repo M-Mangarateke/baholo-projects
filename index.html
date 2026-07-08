@@ -184,17 +184,21 @@
         </a>
       </div>
       <div class="service-list" aria-label="Baholo Projects services">
-        <button class="service-item is-active" type="button" data-service="industrial" data-summary="Valves, pumps, fittings, pipes, bolts, nuts and other industrial or construction materials." aria-pressed="true">
-          <span>01</span><strong>Industrial supplies</strong><i></i>
+        <button class="service-item is-active" type="button" data-service="industrial" data-summary="Valves, pumps, fittings, pipes, bolts, nuts and other industrial or construction materials." aria-pressed="true" aria-expanded="true">
+          <span class="service-item__number">01</span><strong>Industrial supplies</strong><i></i>
+          <span class="service-item__detail">Valves, pumps, fittings, pipes, bolts, nuts and other industrial or construction materials.</span>
         </button>
-        <button class="service-item" type="button" data-service="office" data-summary="Printers, copiers, furniture, electrical appliances, coffee makers, water dispensers and more." aria-pressed="false">
-          <span>02</span><strong>Office supplies &amp; furniture</strong><i></i>
+        <button class="service-item" type="button" data-service="office" data-summary="Printers, copiers, furniture, electrical appliances, coffee makers, water dispensers and more." aria-pressed="false" aria-expanded="false">
+          <span class="service-item__number">02</span><strong>Office supplies &amp; furniture</strong><i></i>
+          <span class="service-item__detail">Printers, copiers, furniture, electrical appliances, coffee makers, water dispensers and more.</span>
         </button>
-        <button class="service-item" type="button" data-service="maintenance" data-summary="Painting, cracked-wall and floor repairs, plumbing, metalwork, gardening and landscaping." aria-pressed="false">
-          <span>03</span><strong>Property maintenance</strong><i></i>
+        <button class="service-item" type="button" data-service="maintenance" data-summary="Painting, cracked-wall and floor repairs, plumbing, metalwork, gardening and landscaping." aria-pressed="false" aria-expanded="false">
+          <span class="service-item__number">03</span><strong>Property maintenance</strong><i></i>
+          <span class="service-item__detail">Painting, cracked-wall and floor repairs, plumbing, metalwork, gardening and landscaping.</span>
         </button>
-        <button class="service-item" type="button" data-service="fabrication" data-summary="Fabrication, modification and practical design of new or existing systems, completed with care." aria-pressed="false">
-          <span>04</span><strong>Welding &amp; fabrication</strong><i></i>
+        <button class="service-item" type="button" data-service="fabrication" data-summary="Fabrication, modification and practical design of new or existing systems, completed with care." aria-pressed="false" aria-expanded="false">
+          <span class="service-item__number">04</span><strong>Welding &amp; fabrication</strong><i></i>
+          <span class="service-item__detail">Fabrication, modification and practical design of new or existing systems, completed with care.</span>
         </button>
       </div>
       <div class="service-visual" aria-hidden="true">
@@ -247,7 +251,7 @@
       </div>
       <figure class="faq-media faq-media--lead media-unfold media-unfold--ltr reveal">
         <div class="media-unfold__inner">
-          <img src="assets/images/service-industrial.webp" alt="An industrial specialist inspecting a large metal valve" width="1536" height="1024" loading="lazy" decoding="async">
+          <img src="assets/images/service-maintenance.webp" alt="A property maintenance professional repairing an exterior wall" width="1536" height="1024" loading="lazy" decoding="async">
         </div>
       </figure>
       <div class="faq-list">
@@ -266,10 +270,12 @@
         <details class="reveal">
           <summary>How do I request a quote?<span></span></summary>
           <p>Complete the short enquiry form, email info@baholoprojects.co.za or continue on WhatsApp.</p>
-          <figure class="faq-answer-media">
-            <img src="assets/images/service-maintenance.webp" alt="A property maintenance professional repairing an exterior wall" width="1536" height="1024" loading="lazy" decoding="async">
-          </figure>
         </details>
+        <figure class="faq-secondary-media media-unfold media-unfold--rtl reveal">
+          <div class="media-unfold__inner">
+            <img src="assets/images/service-industrial.webp" alt="An industrial specialist inspecting a large metal valve" width="1536" height="1024" loading="lazy" decoding="async">
+          </div>
+        </figure>
       </div>
     </section>
 

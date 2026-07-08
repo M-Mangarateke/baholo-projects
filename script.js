@@ -103,6 +103,7 @@
         const isActive = item === button;
         item.classList.toggle('is-active', isActive);
         item.setAttribute('aria-pressed', String(isActive));
+        item.setAttribute('aria-expanded', String(isActive));
       });
       if (serviceSummary) serviceSummary.textContent = button.dataset.summary;
       if (serviceNumber) serviceNumber.textContent = String(index + 1).padStart(2, '0');
