@@ -1402,6 +1402,23 @@ svg {
 
 .footer-meta p { margin: 0; }
 
+.footer-credit {
+  margin-top: 2rem !important;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, .16);
+}
+
+.footer-credit a {
+  color: var(--white);
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-underline-offset: .3em;
+  transition: color .25s var(--ease);
+}
+
+.footer-credit a:hover,
+.footer-credit a:focus-visible { color: var(--orange); }
+
 .reveal {
   opacity: 1;
   transform: none;
