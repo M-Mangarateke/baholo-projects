@@ -6,6 +6,12 @@
   const menuOpen = document.querySelector('.menu-toggle');
   const menuClose = document.querySelector('.menu-close');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const heroVideo = document.querySelector('.hero-stage video');
+
+  if (prefersReducedMotion && heroVideo) {
+    heroVideo.pause();
+    heroVideo.removeAttribute('autoplay');
+  }
 
   window.dataLayer = window.dataLayer || [];
   const GA_MEASUREMENT_ID = '';

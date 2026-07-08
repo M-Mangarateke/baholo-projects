@@ -131,7 +131,10 @@
   <main id="main">
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-stage" aria-hidden="true">
-        <img src="assets/images/hero-welder.webp" alt="" width="1536" height="1024" fetchpriority="high" decoding="async">
+        <video autoplay muted loop playsinline preload="metadata" poster="assets/images/hero-welder.webp" disablepictureinpicture>
+          <source src="assets/videos/hero-welder.webm" type="video/webm">
+          <source src="assets/videos/hero-welder-silent.mp4" type="video/mp4">
+        </video>
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="hero-copy">
@@ -153,8 +156,10 @@
         <p class="section-label">About Baholo Projects</p>
         <h2 id="about-title">A versatile partner built to <span>deliver.</span></h2>
       </div>
-      <figure class="intro-media reveal">
-        <img src="assets/images/team-planning.webp" alt="A project team reviewing technical plans in a fabrication workshop" width="1536" height="1024" loading="lazy" decoding="async">
+      <figure class="intro-media media-unfold media-unfold--ltr reveal">
+        <div class="media-unfold__inner">
+          <img src="assets/images/team-planning.webp" alt="A project team reviewing technical plans in a fabrication workshop" width="1536" height="1024" loading="lazy" decoding="async">
+        </div>
       </figure>
       <div class="intro-body reveal">
         <p class="lead">Baholo Projects is a South African company serving organisations that need reliable products, practical maintenance and skilled fabrication.</p>
@@ -206,10 +211,6 @@
       </div>
       <div class="approach-progress reveal" aria-hidden="true">
         <div class="progress-track"><i></i></div>
-        <span><b>01</b>Understand</span>
-        <span><b>02</b>Plan</span>
-        <span><b>03</b>Deliver</span>
-        <span><b>04</b>Follow through</span>
       </div>
       <div class="approach-flow" aria-label="Our delivery approach">
         <article class="reveal"><span>01</span><h3>Understand</h3><p>We clarify the requirement, timing and expected result.</p></article>
@@ -243,10 +244,12 @@
       <div class="faq-heading reveal">
         <p class="section-label">Useful answers</p>
         <h2 id="faq-title">Before we begin.</h2>
-        <figure class="faq-media">
-          <img src="assets/images/service-maintenance.webp" alt="A property maintenance professional repairing an exterior wall" width="1536" height="1024" loading="lazy" decoding="async">
-        </figure>
       </div>
+      <figure class="faq-media faq-media--lead media-unfold media-unfold--ltr reveal">
+        <div class="media-unfold__inner">
+          <img src="assets/images/service-industrial.webp" alt="An industrial specialist inspecting a large metal valve" width="1536" height="1024" loading="lazy" decoding="async">
+        </div>
+      </figure>
       <div class="faq-list">
         <details class="reveal">
           <summary>What services does Baholo Projects provide?<span></span></summary>
@@ -263,6 +266,9 @@
         <details class="reveal">
           <summary>How do I request a quote?<span></span></summary>
           <p>Complete the short enquiry form, email info@baholoprojects.co.za or continue on WhatsApp.</p>
+          <figure class="faq-answer-media">
+            <img src="assets/images/service-maintenance.webp" alt="A property maintenance professional repairing an exterior wall" width="1536" height="1024" loading="lazy" decoding="async">
+          </figure>
         </details>
       </div>
     </section>
