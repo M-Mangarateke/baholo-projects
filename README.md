@@ -14,7 +14,9 @@ Then open `http://127.0.0.1:4173`.
 
 ## Production handover notes
 
-- Replace the code-native hero media treatment with approved Baholo project photographs or video when available.
+- All generated photographic assets used by the site are stored as WebP files in `assets/images/`.
+- The current hero WebP is the poster and visual anchor for the final hero video. The production-ready Google Flow brief is in `creative/Google-Flow-Hero-Video-Prompt.md`.
+- Replace generated media with approved Baholo project photography only when suitable original material becomes available.
 - Insert the real GA4 measurement ID in `script.js` only after analytics ownership and consent requirements are confirmed.
 - Connect the enquiry form to the approved server-side Google Sheets and email automation. Do not expose Google credentials in browser code.
 - Keep WhatsApp as click tracking only unless a future API integration is approved.

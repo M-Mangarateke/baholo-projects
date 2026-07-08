@@ -63,20 +63,6 @@
     if (event.key === 'Escape' && menu?.classList.contains('is-open')) setMenu(false);
   });
 
-  const scenes = [...document.querySelectorAll('.hero-scene')];
-  const sceneIndex = document.querySelector('[data-scene-index]');
-  let activeScene = 0;
-
-  function showScene(index) {
-    activeScene = index % scenes.length;
-    scenes.forEach((scene, scenePosition) => scene.classList.toggle('is-active', scenePosition === activeScene));
-    if (sceneIndex) sceneIndex.textContent = String(activeScene + 1).padStart(2, '0');
-  }
-
-  if (!prefersReducedMotion && scenes.length > 1) {
-    window.setInterval(() => showScene(activeScene + 1), 4600);
-  }
-
   const heroStage = document.querySelector('.hero-stage');
   if (!prefersReducedMotion && heroStage) {
     window.addEventListener('scroll', () => {

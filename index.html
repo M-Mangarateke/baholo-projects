@@ -10,6 +10,7 @@
   <link rel="canonical" href="https://www.baholoprojects.co.za/">
   <link rel="icon" type="image/png" href="assets/baholo-logo.png">
   <link rel="manifest" href="site.webmanifest">
+  <link rel="preload" as="image" href="assets/images/hero-workshop.webp" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="styles.css">
 
   <meta property="og:type" content="website">
@@ -33,13 +34,17 @@
     "foundingDate": "2016",
     "description": "A South African Level 1 B-BBEE company providing industrial and office supplies, property maintenance, welding and fabrication services.",
     "areaServed": {"@type": "Country", "name": "South Africa"},
-    "email": "Tshego@Baholoprojects.co.za",
-    "telephone": "+27 81 427 4937",
+    "email": "info@baholoprojects.co.za",
+    "founder": {
+      "@type": "Person",
+      "name": "Tshegofatso Goitseone Molapisi",
+      "jobTitle": "Founder and Managing Director"
+    },
     "contactPoint": {
       "@type": "ContactPoint",
-      "contactType": "sales",
-      "telephone": "+27 81 427 4937",
-      "email": "Tshego@Baholoprojects.co.za",
+      "name": "Kgahlisho Koitheng",
+      "contactType": "administration and enquiries",
+      "email": "info@baholoprojects.co.za",
       "areaServed": "ZA",
       "availableLanguage": "English"
     },
@@ -75,7 +80,7 @@
       {
         "@type": "Question",
         "name": "How can I request a quote?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Use the enquiry form, call +27 81 427 4937, email Tshego@Baholoprojects.co.za or continue on WhatsApp."}
+        "acceptedAnswer": {"@type": "Answer", "text": "Use the enquiry form, email info@baholoprojects.co.za or continue on WhatsApp."}
       }
     ]
   }
@@ -89,16 +94,18 @@
   </div>
 
   <header class="site-header" data-header>
-    <a class="brand" href="#top" aria-label="Baholo Projects home">
-      <img src="assets/baholo-logo.png" alt="Baholo Projects">
-    </a>
     <nav class="desktop-nav" aria-label="Primary navigation">
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#approach">Approach</a>
-      <a href="#contact">Contact</a>
-      <a class="nav-cta" href="#contact" data-track="cta_click">Request a quote</a>
     </nav>
+    <a class="brand" href="#top" aria-label="Baholo Projects home">
+      <img src="assets/baholo-logo.png" alt="Baholo Projects">
+    </a>
+    <div class="header-actions">
+      <a class="header-contact" href="#contact">Contact</a>
+      <a class="header-cta" href="#contact" data-track="cta_click">Request a quote</a>
+    </div>
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span><span></span><span></span>
     </button>
@@ -116,56 +123,15 @@
       <a href="#contact"><span>04</span>Contact</a>
     </nav>
     <div class="mobile-menu__footer">
-      <a href="tel:+27814274937">+27 81 427 4937</a>
-      <a href="mailto:Tshego@Baholoprojects.co.za">Tshego@Baholoprojects.co.za</a>
+      <a href="mailto:info@baholoprojects.co.za">info@baholoprojects.co.za</a>
+      <a href="https://wa.me/27676168687?text=Hello%20Baholo%20Projects%2C%20I%20would%20like%20to%20discuss%20a%20requirement." target="_blank" rel="noopener" data-track="whatsapp_click">Continue on WhatsApp</a>
     </div>
   </aside>
 
   <main id="main">
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-stage" aria-hidden="true">
-        <div class="hero-scene hero-scene--one is-active">
-          <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
-            <g class="scene-lines">
-              <path d="M-80 850L520 180L1180 180L1680 760"/>
-              <path d="M140 1000L720 240L1380 240L1600 510"/>
-              <path d="M330 1000L880 310L1410 310"/>
-              <path d="M520 1000L1040 380L1480 380"/>
-            </g>
-            <g class="scene-blocks">
-              <rect x="720" y="240" width="86" height="760"/>
-              <rect x="990" y="360" width="180" height="640"/>
-              <rect x="1260" y="160" width="112" height="840"/>
-            </g>
-          </svg>
-        </div>
-        <div class="hero-scene hero-scene--two">
-          <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
-            <g class="pipe-lines">
-              <circle cx="1130" cy="520" r="360"/>
-              <circle cx="1130" cy="520" r="235"/>
-              <path d="M-100 280H930V760H1660"/>
-              <path d="M0 390H790V890H1560"/>
-            </g>
-            <g class="pipe-nodes">
-              <circle cx="790" cy="390" r="44"/>
-              <circle cx="930" cy="280" r="44"/>
-              <circle cx="790" cy="890" r="44"/>
-            </g>
-          </svg>
-        </div>
-        <div class="hero-scene hero-scene--three">
-          <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
-            <g class="fabrication-lines">
-              <path d="M0 820L430 420L860 840L1290 220L1600 520"/>
-              <path d="M0 940L430 540L860 960L1290 340L1600 640"/>
-              <path d="M430 420V1000M860 840V1000M1290 220V1000"/>
-            </g>
-            <g class="sparks">
-              <path d="M840 800l-120-100M885 800l-10-155M920 820l90-150M940 850l170-40M820 840l-170 20"/>
-            </g>
-          </svg>
-        </div>
+        <img src="assets/images/hero-workshop.webp" alt="" width="1672" height="939" fetchpriority="high" decoding="async">
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="hero-copy">
@@ -176,7 +142,6 @@
           <svg viewBox="0 0 52 18" aria-hidden="true"><path d="M0 9h49M41 1l8 8-8 8"/></svg>
         </a>
       </div>
-      <div class="hero-index" aria-hidden="true"><span data-scene-index>01</span><i></i><span>03</span></div>
       <a class="scroll-cue" href="#about" aria-label="Scroll to about Baholo Projects">
         <span>Scroll</span><i></i>
       </a>
@@ -188,9 +153,12 @@
         <p class="section-label">About Baholo Projects</p>
         <h2 id="about-title">A versatile partner built to <span>deliver.</span></h2>
       </div>
+      <figure class="intro-media reveal">
+        <img src="assets/images/team-planning.webp" alt="A project team reviewing technical plans in a fabrication workshop" width="1536" height="1024" loading="lazy" decoding="async">
+      </figure>
       <div class="intro-body reveal">
         <p class="lead">Baholo Projects is a South African company serving organisations that need reliable products, practical maintenance and skilled fabrication.</p>
-        <p>Established in 2016 and registered in 2019, the business brings persistence, accountability and industry experience to every engagement.</p>
+        <p>Founded in 2016 by Tshegofatso Goitseone Molapisi, who continues to lead the company as Managing Director, Baholo Projects was formally registered in 2019. The business brings persistence, accountability and industry experience to every engagement.</p>
       </div>
       <dl class="proof-strip reveal" aria-label="Company facts">
         <div><dt>2016</dt><dd>Established</dd></div>
@@ -226,9 +194,7 @@
       </div>
       <div class="service-visual" aria-hidden="true">
         <span class="service-visual__number" data-service-number>01</span>
-        <div class="service-visual__mark" data-service-mark>
-          <span></span><span></span><span></span>
-        </div>
+        <div class="service-visual__mark" data-service-mark><span></span><span></span><span></span></div>
       </div>
     </section>
 
@@ -237,6 +203,13 @@
       <div class="approach-title reveal">
         <p class="section-label">How we work</p>
         <h2 id="approach-title">Clear scope.<br>Quality delivery.<br><span>Accountable service.</span></h2>
+      </div>
+      <div class="approach-progress reveal" aria-hidden="true">
+        <div class="progress-track"><i></i></div>
+        <span><b>01</b>Understand</span>
+        <span><b>02</b>Plan</span>
+        <span><b>03</b>Deliver</span>
+        <span><b>04</b>Follow through</span>
       </div>
       <div class="approach-flow" aria-label="Our delivery approach">
         <article class="reveal"><span>01</span><h3>Understand</h3><p>We clarify the requirement, timing and expected result.</p></article>
@@ -251,6 +224,9 @@
         <p class="section-label section-label--light">Direction</p>
         <h2 id="principles-title">Built for relevance.<br>Driven by service.</h2>
       </div>
+      <figure class="principles-media reveal">
+        <img src="assets/images/service-fabrication.webp" alt="A welder fabricating a steel gate frame in a workshop" width="1536" height="1024" loading="lazy" decoding="async">
+      </figure>
       <div class="principle principle--mission reveal">
         <span>Mission</span>
         <p>Deliver quality products and services on time, keep the client's best interest at heart and earn growth through a consistently strong experience.</p>
@@ -267,6 +243,9 @@
       <div class="faq-heading reveal">
         <p class="section-label">Useful answers</p>
         <h2 id="faq-title">Before we begin.</h2>
+        <figure class="faq-media">
+          <img src="assets/images/service-maintenance.webp" alt="A property maintenance professional repairing an exterior wall" width="1536" height="1024" loading="lazy" decoding="async">
+        </figure>
       </div>
       <div class="faq-list">
         <details class="reveal">
@@ -283,7 +262,7 @@
         </details>
         <details class="reveal">
           <summary>How do I request a quote?<span></span></summary>
-          <p>Complete the short enquiry form, call +27 81 427 4937, send an email or continue on WhatsApp.</p>
+          <p>Complete the short enquiry form, email info@baholoprojects.co.za or continue on WhatsApp.</p>
         </details>
       </div>
     </section>
@@ -292,10 +271,14 @@
       <div class="contact-heading reveal">
         <p class="section-label">Start a conversation</p>
         <h2 id="contact-title">What do you need<br>Baholo to <span>deliver?</span></h2>
+        <div class="contact-person">
+          <strong>Kgahlisho Koitheng</strong>
+          <span>Administrative Officer | Baholo Projects</span>
+          <span>Steel Fabrication | Manufacturing | Industrial Supply</span>
+        </div>
         <div class="direct-links">
-          <a href="tel:+27814274937">+27 81 427 4937</a>
-          <a href="mailto:Tshego@Baholoprojects.co.za">Tshego@Baholoprojects.co.za</a>
-          <a href="https://wa.me/27814274937?text=Hello%20Baholo%20Projects%2C%20I%20would%20like%20to%20discuss%20a%20requirement." target="_blank" rel="noopener" data-track="whatsapp_click">Continue on WhatsApp</a>
+          <a href="mailto:info@baholoprojects.co.za">info@baholoprojects.co.za</a>
+          <a href="https://wa.me/27676168687?text=Hello%20Baholo%20Projects%2C%20I%20would%20like%20to%20discuss%20a%20requirement." target="_blank" rel="noopener" data-track="whatsapp_click">Continue on WhatsApp</a>
         </div>
       </div>
 
@@ -305,10 +288,7 @@
           <label><span>Name *</span><input type="text" name="name" autocomplete="name" required></label>
           <label><span>Company</span><input type="text" name="company" autocomplete="organization"></label>
         </div>
-        <div class="field-row">
-          <label><span>Email *</span><input type="email" name="email" autocomplete="email" required></label>
-          <label><span>Phone *</span><input type="tel" name="phone" autocomplete="tel" required></label>
-        </div>
+        <label><span>Email *</span><input type="email" name="email" autocomplete="email" required></label>
         <label>
           <span>Service required *</span>
           <select name="service" required>
