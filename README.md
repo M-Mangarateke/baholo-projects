@@ -15,6 +15,7 @@ Then open `http://127.0.0.1:4173`.
 ## Production handover notes
 
 - All generated photographic assets used by the site are stored as WebP files in `assets/images/`.
+- The looping Inside Baholo strip uses the ordered WebP sequence in `assets/images/world/`.
 - `assets/videos/hero-welder.webm` is the silent primary hero video, with `hero-welder-silent.mp4` as the silent Safari fallback and `assets/images/hero-welder.webp` as the poster. The production-ready Google Flow/Omni brief is in `creative/Google-Flow-Hero-Video-Prompt.md`.
 - Replace generated media with approved Baholo project photography only when suitable original material becomes available.
 - Insert the real GA4 measurement ID in `script.js` only after analytics ownership and consent requirements are confirmed.

@@ -77,6 +77,43 @@
     }, { passive: true });
   }
 
+  const world = document.querySelector('.world');
+  const worldTrack = document.querySelector('.world-track');
+  const worldSequence = document.querySelector('.world-sequence');
+
+  if (world && worldTrack && worldSequence) {
+    let worldLoaded = false;
+
+    const loadWorld = (duplicate) => {
+      if (worldLoaded) return;
+      worldSequence.querySelectorAll('img[data-src]').forEach((image) => {
+        image.src = image.dataset.src;
+        image.removeAttribute('data-src');
+      });
+
+      if (duplicate) {
+        const clone = worldSequence.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.querySelectorAll('img').forEach((image) => { image.alt = ''; });
+        worldTrack.appendChild(clone);
+      }
+      worldLoaded = true;
+    };
+
+    if (prefersReducedMotion) {
+      loadWorld(false);
+    } else if ('IntersectionObserver' in window) {
+      const worldObserver = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) loadWorld(true);
+        world.classList.toggle('is-moving', entry.isIntersecting && worldLoaded);
+      }, { threshold: 0, rootMargin: '700px 0px' });
+      worldObserver.observe(world);
+    } else {
+      loadWorld(true);
+      world.classList.add('is-moving');
+    }
+  }
+
   const revealItems = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !prefersReducedMotion) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
