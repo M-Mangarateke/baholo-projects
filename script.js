@@ -8,9 +8,46 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const heroVideo = document.querySelector('.hero-stage video');
 
-  if (prefersReducedMotion && heroVideo) {
-    heroVideo.pause();
-    heroVideo.removeAttribute('autoplay');
+  if (heroVideo) {
+    heroVideo.defaultMuted = true;
+    heroVideo.muted = true;
+
+    if (prefersReducedMotion) {
+      heroVideo.pause();
+      heroVideo.removeAttribute('autoplay');
+    } else {
+      let heroIsVisible = true;
+
+      const ensureHeroPlayback = () => {
+        if (heroIsVisible && document.visibilityState === 'visible' && heroVideo.paused) {
+          heroVideo.play().catch(() => {});
+        }
+      };
+
+      heroVideo.addEventListener('canplay', ensureHeroPlayback);
+      heroVideo.addEventListener('loadeddata', ensureHeroPlayback, { once: true });
+      heroVideo.addEventListener('pause', () => {
+        if (heroIsVisible && document.visibilityState === 'visible') {
+          window.setTimeout(ensureHeroPlayback, 350);
+        }
+      });
+
+      window.addEventListener('pageshow', ensureHeroPlayback);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') ensureHeroPlayback();
+      });
+      document.addEventListener('pointerdown', ensureHeroPlayback, { once: true, passive: true });
+      document.addEventListener('touchstart', ensureHeroPlayback, { once: true, passive: true });
+
+      if ('IntersectionObserver' in window) {
+        const heroVideoObserver = new IntersectionObserver(([entry]) => {
+          heroIsVisible = entry.isIntersecting;
+          if (heroIsVisible) ensureHeroPlayback();
+          else heroVideo.pause();
+        }, { threshold: .08 });
+        heroVideoObserver.observe(heroVideo);
+      }
+    }
   }
 
   window.dataLayer = window.dataLayer || [];
