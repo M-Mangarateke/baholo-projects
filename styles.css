@@ -128,16 +128,16 @@ svg {
 }
 
 .brand img {
-  width: 5.6rem;
-  height: 5.6rem;
+  width: 4.4rem;
+  height: 4.4rem;
   object-fit: contain;
   object-position: center;
   transition: width .35s var(--ease), height .35s var(--ease);
 }
 
 .site-header.is-scrolled .brand img {
-  width: 4.35rem;
-  height: 4.35rem;
+  width: 3.7rem;
+  height: 3.7rem;
 }
 
 .desktop-nav {
@@ -956,6 +956,7 @@ svg {
   width: clamp(13rem, 20vw, 18rem);
   aspect-ratio: 4 / 3;
   margin: 0;
+  background: #161616;
   border-right: 1px solid rgba(255, 255, 255, .22);
   overflow: hidden;
 }
@@ -964,9 +965,12 @@ svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
   filter: saturate(.88) contrast(1.04);
-  transition: filter .45s var(--ease), transform .7s var(--ease);
+  transition: opacity .35s ease, filter .45s var(--ease), transform .7s var(--ease);
 }
+
+.world.is-ready .world-frame img { opacity: 1; }
 
 .world-frame:hover img {
   filter: saturate(1) contrast(1.02);
@@ -1445,7 +1449,7 @@ svg {
   .nav-wordmark strong { font-size: 1.4rem; }
   .nav-wordmark span { font-size: .69rem; }
   .brand { width: 7rem; }
-  .brand img { width: 4.8rem; height: 4.8rem; }
+  .brand img { width: 4.2rem; height: 4.2rem; }
   .hero-copy { left: 12.5%; width: 72vw; }
   .services { grid-template-columns: 42% 58%; }
   .service-list { grid-column: 2; }
@@ -1474,7 +1478,7 @@ svg {
     border: 0;
   }
   .brand img,
-  .site-header.is-scrolled .brand img { width: 4.65rem; height: 4.65rem; }
+  .site-header.is-scrolled .brand img { width: 3.7rem; height: 3.7rem; }
   .desktop-nav { display: none; }
   .header-actions { display: none; }
 

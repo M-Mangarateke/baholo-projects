@@ -82,35 +82,57 @@
   const worldSequence = document.querySelector('.world-sequence');
 
   if (world && worldTrack && worldSequence) {
-    let worldLoaded = false;
+    let worldLoadPromise;
+    let worldInRange = false;
 
     const loadWorld = (duplicate) => {
-      if (worldLoaded) return;
-      worldSequence.querySelectorAll('img[data-src]').forEach((image) => {
-        image.src = image.dataset.src;
-        image.removeAttribute('data-src');
-      });
+      if (worldLoadPromise) return worldLoadPromise;
 
-      if (duplicate) {
-        const clone = worldSequence.cloneNode(true);
-        clone.setAttribute('aria-hidden', 'true');
-        clone.querySelectorAll('img').forEach((image) => { image.alt = ''; });
-        worldTrack.appendChild(clone);
-      }
-      worldLoaded = true;
+      worldLoadPromise = (async () => {
+        const images = [...worldSequence.querySelectorAll('img')];
+        images.forEach((image) => {
+          if (image.dataset.src) {
+            image.src = image.dataset.src;
+            image.removeAttribute('data-src');
+          }
+        });
+
+        await Promise.allSettled(images.map((image) => {
+          if (typeof image.decode === 'function') return image.decode();
+          if (image.complete) return Promise.resolve();
+          return new Promise((resolve) => {
+            image.addEventListener('load', resolve, { once: true });
+            image.addEventListener('error', resolve, { once: true });
+          });
+        }));
+
+        if (duplicate && worldTrack.querySelectorAll('.world-sequence').length === 1) {
+          const clone = worldSequence.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.querySelectorAll('img').forEach((image) => { image.alt = ''; });
+          worldTrack.appendChild(clone);
+        }
+        world.classList.add('is-ready');
+      })();
+
+      return worldLoadPromise;
     };
 
     if (prefersReducedMotion) {
       loadWorld(false);
     } else if ('IntersectionObserver' in window) {
       const worldObserver = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) loadWorld(true);
-        world.classList.toggle('is-moving', entry.isIntersecting && worldLoaded);
+        worldInRange = entry.isIntersecting;
+        if (worldInRange) {
+          loadWorld(true).then(() => world.classList.toggle('is-moving', worldInRange));
+        } else {
+          world.classList.remove('is-moving');
+        }
       }, { threshold: 0, rootMargin: '700px 0px' });
       worldObserver.observe(world);
     } else {
-      loadWorld(true);
-      world.classList.add('is-moving');
+      worldInRange = true;
+      loadWorld(true).then(() => world.classList.add('is-moving'));
     }
   }
 
