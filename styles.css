@@ -2748,8 +2748,13 @@ body.dialog-open {
   }
   .pipe-dialog__shell {
     display: block;
-    min-height: 100dvh;
+    height: 100%;
+    min-height: 0;
     background: var(--white);
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
   }
   .pipe-dialog__media {
     height: 34dvh;
