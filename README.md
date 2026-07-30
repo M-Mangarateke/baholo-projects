@@ -18,8 +18,13 @@ Then open `http://127.0.0.1:4173`.
 - The looping Inside Baholo strip uses the ordered WebP sequence in `assets/images/world/`.
 - `assets/videos/hero-welder.webm` is the silent primary hero video, with `hero-welder-silent.mp4` as the silent Safari fallback and `assets/images/hero-welder.webp` as the poster. The production-ready Google Flow/Omni brief is in `creative/Google-Flow-Hero-Video-Prompt.md`.
 - Replace generated media with approved Baholo project photography only when suitable original material becomes available.
-- Insert the real GA4 measurement ID in `script.js` only after analytics ownership and consent requirements are confirmed.
-- Connect the enquiry form to the approved server-side Google Sheets and email automation. Do not expose Google credentials in browser code.
+- Do not create additional AI-generated media for this release. New pipework cards use supplied Baholo industrial photography with factual, non-project-specific descriptions.
+- Insert the real GA4 measurement ID in `site-config.js` only after analytics ownership and consent requirements are confirmed.
+- Google Apps Script and Google Sheets deployment is deferred until access to the Baholo administration account is available. Keep `LEAD_ENDPOINT_URL` blank until that work resumes.
+- When the lead system resumes, the Baholo administration account should own the Apps Script and private Sheet. The intended editor and notification mapping must be re-confirmed before deployment.
+- Do not expose Google credentials or the Google Sheet itself in browser code.
 - Keep WhatsApp as click tracking only unless a future API integration is approved.
-- Confirm the final privacy notice, retention period and data controller details before enabling live submissions.
+- The public privacy notice is `privacy.html`. Retention is set to 24 months unless Baholo confirms a different operational/legal requirement.
 - Update the canonical URL only if the final production domain changes from `www.baholoprojects.co.za`.
+- The requested news section is deferred until Baholo assigns an editorial owner and approves a sourcing, attribution and storage workflow.
+- Baholo has approved the statement that the company has worked with Heineken. The website uses `assets/heineken-logo-transparent.png`, which preserves the red star and white lettering while removing the supplied green panel and outer canvas.

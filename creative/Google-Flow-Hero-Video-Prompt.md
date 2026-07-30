@@ -10,7 +10,7 @@
 
 ## Main prompt
 
-Create a 10-12 second photorealistic cinematic documentary video for the homepage of Baholo Projects, a South African industrial supply, property maintenance, welding and fabrication company.
+Create a 10-12 second photorealistic cinematic documentary video for the homepage of Baholo Projects, a South African industrial supply, pipework, welding and fabrication, consulting and scaffolding company.
 
 Use the uploaded welding workshop image as the strict visual anchor. Preserve the same single welder, fully lowered dark welding helmet, charcoal protective workwear with restrained orange piping, heavy gloves, MIG welding torch, rectangular steel frame, clamps, workshop architecture, daylight direction and overall composition. Do not redesign the worker, clothing, protective equipment, steel frame or setting.
 
