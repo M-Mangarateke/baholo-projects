@@ -68,11 +68,21 @@ On 30 August 2026:
    and the correct `www` CNAME.
 6. The custom domain returned the Baholo Projects GitHub Pages site over HTTP,
    with the apex redirecting to `www`.
+7. GitHub's DNS health check reported both the canonical and apex domains as
+   valid, served by Pages, HTTPS-eligible, free of non-GitHub address records,
+   and without a CAA error.
+8. Initial certificate provisioning remained pending for more than an hour.
+   Following GitHub's documented recovery procedure, the same custom domain
+   was briefly removed and immediately re-added to restart provisioning.
+9. GitHub issued the certificate and HTTPS enforcement was enabled. All four
+   GitHub Pages IPv4 addresses returned a valid certificate: `www` returned
+   HTTP 200 and the apex returned HTTP 301 to the canonical HTTPS `www` URL.
 
-GitHub certificate issuance begins only after the custom domain and DNS are
-valid. Until issuance completes, `https_enforced` can remain false and HTTPS
-may show a certificate-name error. Enable HTTPS enforcement as soon as GitHub
-reports that the certificate exists.
+The production Pages state is now:
+
+- `cname: www.baholoprojects.co.za`
+- `https_enforced: true`
+- `html_url: https://www.baholoprojects.co.za/`
 
 ## GitHub Pages checks
 
@@ -82,8 +92,8 @@ View the current Pages state:
 gh api repos/M-Mangarateke/baholo-projects/pages
 ```
 
-After the certificate exists, enforce HTTPS while preserving the custom
-domain:
+The following idempotent command preserves the custom domain while keeping
+HTTPS enforcement enabled:
 
 ```powershell
 gh api --method PUT repos/M-Mangarateke/baholo-projects/pages `
