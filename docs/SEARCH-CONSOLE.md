@@ -93,7 +93,11 @@ A subsequent live search on 30 August showed the homepage with the corrected
 Baholo title and industrial-services description; the GoDaddy/Airo title and
 free-credit snippet were absent. Continue normal monitoring because Google may
 still recalculate snippets, favicons, canonical selection and rankings over
-time.
+time. At that observation Google still rendered its generic fallback icon.
+The source now prioritises stable 48×48 and 192×192 Baholo PNG icons—both valid
+multiples of 48—before smaller/browser fallbacks. Favicon display remains a
+separate Google recrawl/reprocessing observation, not a reason to submit
+repeated indexing requests.
 
 ## Monitoring checklist
 
