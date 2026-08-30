@@ -25,8 +25,9 @@ reporting settings and may be corrected later without changing website code.
 Production Realtime validation on 30 August 2026 showed one active user in the
 last 30 minutes, the production page title, and page-view/engagement events.
 The tag was also verified to be absent before consent and loaded exactly once
-after consent. The lead key event still requires the live Apps Script endpoint
-and a labelled end-to-end test submission.
+after consent. A non-sensitive production quote CTA generated one `cta_click`
+event in Realtime. The lead key event still requires the live Apps Script
+endpoint and a labelled end-to-end test submission.
 
 ## Consent implementation
 

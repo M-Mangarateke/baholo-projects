@@ -17,7 +17,7 @@ personal information are never sent to Analytics.
 | `lead_form_submit_attempt` | Valid form is handed to the backend | `form_name` | No |
 | `lead_form_error` | Client validation, missing endpoint, backend error or timeout | `form_name`, `error_reason` or `error_count` | No |
 | `cta_click` | A marked quote/contact call to action is selected | `link_text`, optional `cta_location` | No |
-| `contact_click` | A marked email or WhatsApp link is selected | `link_text`, `contact_method` | No |
+| `contact_click` | A marked email, phone or WhatsApp link is selected | `link_text`, `contact_method` | No |
 | `service_select` | A service panel is selected | `service_name` | No |
 | `pipe_story_open` | A pipework detail dialog is opened | `story_name` | No |
 | `developer_portfolio_click` | Footer developer link is selected | `link_text`, `link_domain`, `link_path` | No |
