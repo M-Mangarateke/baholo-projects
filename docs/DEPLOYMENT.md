@@ -27,6 +27,19 @@ Invoke-WebRequest https://www.baholoprojects.co.za/robots.txt -UseBasicParsing
 7. Confirm HTTP/apex redirects, the HTTPS certificate, metadata, navigation,
    consent behavior and form status.
 
+## Workflow maintenance
+
+The workflow uses the current Node 24 action majors verified from the official
+repositories on 30 August 2026: `checkout@v7`, `configure-pages@v6`,
+`upload-pages-artifact@v5` and `deploy-pages@v5`. This removed the runner's
+Node 20 deprecation annotation.
+
+`deploy-pages@v5` currently emits a successful-run `DEP0040` warning from its
+bundled `punycode` dependency. The official upstream issue is
+`actions/deploy-pages#434`; it has no clean consumer-side fix. Do not suppress
+Node warnings or pin an unreleased action to hide it. Recheck the official
+release before changing the major version.
+
 ## Rollback
 
 Do not rewrite history or use `git reset --hard`. Revert the faulty release with
