@@ -22,6 +22,12 @@ the selected business size is 1–10 employees, and the selected objectives are
 lead generation and understanding website/app traffic. These are administrative
 reporting settings and may be corrected later without changing website code.
 
+Production Realtime validation on 30 August 2026 showed one active user in the
+last 30 minutes, the production page title, and page-view/engagement events.
+The tag was also verified to be absent before consent and loaded exactly once
+after consent. The lead key event still requires the live Apps Script endpoint
+and a labelled end-to-end test submission.
+
 ## Consent implementation
 
 The website uses a basic consent model:

@@ -7,6 +7,7 @@
   <meta name="description" content="Baholo Projects provides industrial supplies, pipework installation, welding and fabrication, consulting and scaffolding services in South Africa.">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="canonical" href="https://www.baholoprojects.co.za/">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
@@ -228,7 +229,7 @@
 
   <aside class="mobile-menu" id="mobile-menu" aria-label="Mobile menu panel" aria-hidden="true" inert>
     <div class="mobile-menu__top">
-      <img src="assets/baholo-logo-light.jpg" alt="Baholo Projects">
+      <img src="assets/baholo-logo-light.jpg" alt="Baholo Projects" width="750" height="1334">
       <button class="menu-close" type="button" aria-label="Close menu"><span></span><span></span></button>
     </div>
     <nav aria-label="Mobile navigation">
@@ -246,9 +247,9 @@
   <main id="main">
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-stage" aria-hidden="true">
-        <video muted loop playsinline webkit-playsinline preload="auto" poster="assets/images/hero-welder.webp" disablepictureinpicture disableremoteplayback>
-          <source src="assets/videos/hero-welder-silent.mp4" type="video/mp4">
-          <source src="assets/videos/hero-welder.webm" type="video/webm">
+        <video muted loop playsinline webkit-playsinline preload="none" poster="assets/images/hero-welder.webp" disablepictureinpicture disableremoteplayback>
+          <source data-src="assets/videos/hero-welder-silent.mp4" type="video/mp4">
+          <source data-src="assets/videos/hero-welder.webm" type="video/webm">
         </video>
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
@@ -671,12 +672,14 @@
           </dl>
         </section>
         <p class="form-note">Send a short enquiry to Baholo Projects. Your details are used only to respond to this request.</p>
-        <label class="hp-field" aria-hidden="true" tabindex="-1">
+        <label class="hp-field" aria-hidden="true" tabindex="-1" hidden>
           <span>Website</span>
-          <input type="text" name="website" autocomplete="off" tabindex="-1">
+          <input type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true">
         </label>
         <input type="hidden" name="formVersion" data-form-version>
         <input type="hidden" name="privacyVersion" data-privacy-version>
+        <input type="hidden" name="formLoadedAt" data-form-loaded-at>
+        <input type="hidden" name="submissionToken" data-submission-token>
         <input type="hidden" name="pageUrl" data-page-url>
         <input type="hidden" name="landingPage" data-landing-page>
         <input type="hidden" name="referrer" data-referrer>
@@ -711,14 +714,14 @@
           <svg viewBox="0 0 52 18" aria-hidden="true"><path d="M0 9h49M41 1l8 8-8 8"/></svg>
         </button>
         <div class="form-status" role="status" aria-live="polite"></div>
-        <iframe class="lead-submit-frame" name="lead-submit-frame" title="Lead submission response"></iframe>
+        <iframe class="lead-submit-frame" name="lead-submit-frame" title="Lead submission response" aria-hidden="true" tabindex="-1" hidden></iframe>
       </form>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="footer-brand">
-      <img src="assets/baholo-logo.png" alt="Baholo Projects">
+      <img src="assets/baholo-logo.png" alt="Baholo Projects" width="500" height="500">
       <p>Reliable supply. Skilled workmanship.</p>
     </div>
     <nav aria-label="Footer navigation">
@@ -750,6 +753,6 @@
   </section>
 
   <script src="site-config.js?v=20260830a" defer></script>
-  <script src="script.js?v=20260830a" defer></script>
+  <script src="script.js?v=20260830b" defer></script>
 </body>
 </html>

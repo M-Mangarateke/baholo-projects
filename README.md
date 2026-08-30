@@ -14,6 +14,12 @@ Then open `http://127.0.0.1:4173`.
 
 ## Production handover notes
 
+- The recovered architecture and gap audit are documented in
+  [`docs/RECOVERY-AUDIT.md`](docs/RECOVERY-AUDIT.md).
+- Architecture and development setup are documented in
+  [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+- Releases and rollback are documented in
+  [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 - The production-domain DNS, redirect strategy, retained email records, and
   verification procedure are documented in [`docs/DOMAIN-DNS.md`](docs/DOMAIN-DNS.md).
 - Search Console ownership, sitemap handling, stale GoDaddy result recovery and
@@ -23,6 +29,20 @@ Then open `http://127.0.0.1:4173`.
   documented in [`docs/GOOGLE-ANALYTICS.md`](docs/GOOGLE-ANALYTICS.md).
 - The intentional measurement events and key-event rules are documented in
   [`docs/EVENT-TRACKING.md`](docs/EVENT-TRACKING.md).
+- The Google Business Profile draft and verification boundary are documented in
+  [`docs/GOOGLE-BUSINESS-PROFILE.md`](docs/GOOGLE-BUSINESS-PROFILE.md).
+- Form processing, the private Sheet and notification workflow are documented
+  in [`docs/FORMS-DATA-FLOW.md`](docs/FORMS-DATA-FLOW.md).
+- Public configuration is documented in
+  [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md); security decisions in
+  [`docs/SECURITY.md`](docs/SECURITY.md).
+- Ongoing checks and recovery steps are in
+  [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md) and
+  [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md).
+- The evidence-backed release status and remaining external validation gates
+  are in [`docs/QA-REPORT-2026-08-30.md`](docs/QA-REPORT-2026-08-30.md).
+- The authoritative service register is
+  [`docs/EXTERNAL-SERVICES.md`](docs/EXTERNAL-SERVICES.md).
 
 - All generated photographic assets used by the site are stored as WebP files in `assets/images/`.
 - The looping Inside Baholo strip uses the ordered WebP sequence in `assets/images/world/`.
@@ -32,8 +52,11 @@ Then open `http://127.0.0.1:4173`.
 - The production GA4 measurement ID is public configuration, not a secret. It
   is stored in `site-config.js`; do not place Google account credentials or API
   secrets there.
-- Google Apps Script and Google Sheets deployment is deferred until access to the Baholo administration account is available. Keep `LEAD_ENDPOINT_URL` blank until that work resumes.
-- When the lead system resumes, the Baholo administration account should own the Apps Script and private Sheet. The intended editor and notification mapping must be re-confirmed before deployment.
+- The Apps Script backend source is in `apps-script/`. Keep
+  `LEAD_ENDPOINT_URL` blank until the owner has authorised, deployed and tested
+  the production web app.
+- The Apps Script project and private Sheet should be owned by the Baholo
+  administration account. Record access and recovery contacts privately.
 - Do not expose Google credentials or the Google Sheet itself in browser code.
 - Keep WhatsApp as click tracking only unless a future API integration is approved.
 - The public privacy notice is `privacy.html` and the website terms are

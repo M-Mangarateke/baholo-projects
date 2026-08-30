@@ -1,2 +1,4 @@
 assets/videos/hero-welder.mp4
 assets/images/world/*.jpg
+.playwright-cli/
+output/playwright/

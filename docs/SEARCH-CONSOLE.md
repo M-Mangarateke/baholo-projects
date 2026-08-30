@@ -10,7 +10,7 @@
 | Sitemap | `https://www.baholoprojects.co.za/sitemap.xml` |
 | Robots file | `https://www.baholoprojects.co.za/robots.txt` |
 | Ownership status | Verified on 2026-08-30 using a DNS TXT record |
-| Sitemap status | Submitted successfully on 2026-08-30 |
+| Sitemap status | Success; 3 discovered pages on 2026-08-30 |
 
 The Domain property is intentional: it covers HTTP and HTTPS plus the apex and
 all subdomains. GitHub Pages redirects the HTTP and apex variants to the
@@ -79,10 +79,10 @@ Baholo site and its `www` canonical. This record explains why a stale GoDaddy
 title, description or icon may remain temporarily even though DNS and the live
 page are correct.
 
-After the terms page is deployed, the sitemap contains three canonical URLs:
-the homepage, privacy notice and website terms. Confirm that Search Console's
-discovered-page count updates from two to three after Google next reads the
-sitemap.
+After the terms page was deployed, the updated sitemap was resubmitted and
+Search Console reported **Success** with three discovered pages. The terms page
+passed the live URL test and its indexing request was added to Google's priority
+crawl queue. This is not a claim that Google has indexed or will rank the page.
 
 ## Monitoring checklist
 

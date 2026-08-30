@@ -11,7 +11,8 @@ personal information are never sent to Analytics.
 
 | Event | Trigger | Important parameters | Key event |
 | --- | --- | --- | --- |
-| `generate_lead` | Backend confirms a stored enquiry | `form_name`, `duplicate` | Yes |
+| `generate_lead` | Backend confirms a newly stored enquiry | `form_name` | Yes |
+| `lead_duplicate_suppressed` | Backend returns the existing reference for a recent identical enquiry | `form_name` | No |
 | `lead_form_start` | First input in the quote form | `form_name` | No |
 | `lead_form_submit_attempt` | Valid form is handed to the backend | `form_name` | No |
 | `lead_form_error` | Client validation, missing endpoint, backend error or timeout | `form_name`, `error_reason` or `error_count` | No |
@@ -31,10 +32,10 @@ Use this sequence for the enquiry funnel:
 
 `lead_form_start` → `lead_form_submit_attempt` → `generate_lead`
 
-Use `lead_form_error` as a diagnostic event, not a funnel success. A successful
-lead is counted at the backend acknowledgement boundary rather than on a button
-click. The Sheet/reference ID is the operational source of truth; GA4 is the
-aggregate marketing measurement layer.
+Use `lead_form_error` and `lead_duplicate_suppressed` as diagnostic events, not
+funnel successes. A new lead is counted at the backend acknowledgement boundary
+rather than on a button click. The Sheet/reference ID is the operational source
+of truth; GA4 is the aggregate marketing measurement layer.
 
 ## Change control
 

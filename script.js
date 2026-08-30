@@ -8,15 +8,25 @@
   const menuClose = document.querySelector('.menu-close');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const heroVideo = document.querySelector('.hero-stage video');
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const shouldLoadHeroVideo = !prefersReducedMotion
+    && !window.matchMedia('(max-width: 767px)').matches
+    && !connection?.saveData
+    && !/^(slow-)?2g$/i.test(connection?.effectiveType || '');
 
   if (heroVideo) {
     heroVideo.defaultMuted = true;
     heroVideo.muted = true;
 
-    if (prefersReducedMotion) {
+    if (!shouldLoadHeroVideo) {
       heroVideo.pause();
       heroVideo.removeAttribute('autoplay');
     } else {
+      heroVideo.querySelectorAll('source[data-src]').forEach((source) => {
+        source.src = source.dataset.src;
+        source.removeAttribute('data-src');
+      });
+      heroVideo.load();
       let heroIsVisible = true;
 
       const ensureHeroPlayback = () => {
@@ -398,6 +408,10 @@
 
     setValue('[data-form-version]', leadConfig.FORM_VERSION || '');
     setValue('[data-privacy-version]', leadConfig.PRIVACY_VERSION || '');
+    setValue('[data-form-loaded-at]', String(Date.now()));
+    setValue('[data-submission-token]', typeof window.crypto?.randomUUID === 'function'
+      ? window.crypto.randomUUID()
+      : `${Date.now().toString(16)}-${Math.random().toString(16).slice(2)}-${Math.random().toString(16).slice(2)}`);
     setValue('[data-page-url]', window.location.href);
     setValue('[data-landing-page]', window.location.pathname || '/');
     setValue('[data-referrer]', document.referrer);
@@ -449,7 +463,11 @@
       form.reset();
       setFormMetadata();
       formStarted = false;
-      trackEvent('generate_lead', { form_name: 'quote_enquiry', duplicate: Boolean(data.duplicate) });
+      if (data.duplicate) {
+        trackEvent('lead_duplicate_suppressed', { form_name: 'quote_enquiry' });
+      } else {
+        trackEvent('generate_lead', { form_name: 'quote_enquiry' });
+      }
       return;
     }
 
