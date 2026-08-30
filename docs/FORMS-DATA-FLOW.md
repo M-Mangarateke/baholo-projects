@@ -36,6 +36,8 @@ inside the configured window. It is not an authentication credential.
 
 - required-field, length, email, phone, service-list and consent validation on
   both client and server;
+- formula-injection neutralisation before user-controlled values enter Sheet
+  cells;
 - hidden honeypot;
 - minimum form age, expiring random submission token and six-hour token replay
   suppression;
@@ -47,6 +49,8 @@ inside the configured window. It is not an authentication credential.
 - HTML escaping and plain-text alternatives for email;
 - Sheet-first persistence so an email failure does not lose the enquiry;
 - public errors omit stack traces and internal account details;
+- browser acknowledgements must come from the dedicated form iframe and an
+  approved Apps Script/Googleusercontent origin;
 - timeout and direct email/WhatsApp fallback on the website.
 
 Apps Script does not reliably provide the visitor IP address. If spam becomes

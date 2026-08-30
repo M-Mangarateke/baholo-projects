@@ -49,6 +49,8 @@ changes. Do not put passwords or private API material in these properties.
 ## Controls
 
 - server-side length, format, service-list and consent validation;
+- CR/LF/tab normalisation for fields used in email headers and metadata;
+- spreadsheet-formula neutralisation for every user-controlled Sheet cell;
 - honeypot rejection;
 - minimum form age and expiring browser submission token;
 - six-hour replay suppression for an already processed submission token;

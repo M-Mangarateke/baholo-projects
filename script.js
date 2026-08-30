@@ -371,6 +371,7 @@
   });
 
   const form = document.querySelector('[data-lead-form]');
+  const leadResponseFrame = document.querySelector('iframe[name="lead-submit-frame"]');
   let formStarted = false;
   let leadSubmitTimeout;
 
@@ -450,7 +451,7 @@
   }, { once: true });
 
   window.addEventListener('message', (event) => {
-    if (!form || !isAllowedLeadResponseOrigin(event.origin)) return;
+    if (!form || event.source !== leadResponseFrame?.contentWindow || !isAllowedLeadResponseOrigin(event.origin)) return;
     const data = event.data || {};
     if (data.source !== 'baholo-lead-form') return;
 

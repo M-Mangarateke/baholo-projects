@@ -20,8 +20,11 @@ is confirmed.
 - consent-gated, production-host-only GA4;
 - no analytics PII parameters;
 - Apps Script server validation, duplicate detection, rate limiting, locking,
-  bounded logs and escaped email templates;
+  email-header normalisation, formula-injection neutralisation, bounded logs
+  and escaped email templates;
 - private Sheet ownership and origin-restricted acknowledgement;
+- form acknowledgements accepted only from the dedicated response iframe and
+  approved Apps Script/Googleusercontent origins;
 - external links use `rel="noopener"` where a new tab is opened;
 - a strict-origin-when-cross-origin referrer policy on every public page;
 - reduced-motion and constrained-network media handling;

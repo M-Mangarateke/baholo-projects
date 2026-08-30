@@ -84,6 +84,11 @@ Search Console reported **Success** with three discovered pages. The terms page
 passed the live URL test and its indexing request was added to Google's priority
 crawl queue. This is not a claim that Google has indexed or will rank the page.
 
+Later on 30 August, a live Google search showed the terms page using its correct
+Baholo title while the apex homepage result still showed the old GoDaddy/Airo
+content. That mixed state confirms processing is occurring URL by URL; it does
+not justify repeated indexing requests or temporary-removal tools.
+
 ## Monitoring checklist
 
 For the first four weeks after launch, check Search Console weekly:

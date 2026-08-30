@@ -148,23 +148,23 @@ function doPost(event) {
         receivedAt,
         leadId,
         'New',
-        lead.name,
-        lead.company,
-        lead.email,
-        lead.phone,
-        lead.service,
-        lead.message,
+        safeCell_(lead.name),
+        safeCell_(lead.company),
+        safeCell_(lead.email),
+        safeCell_(lead.phone),
+        safeCell_(lead.service),
+        safeCell_(lead.message),
         'Yes',
-        lead.formVersion,
-        lead.privacyVersion,
-        lead.pageUrl,
-        lead.landingPage,
-        lead.referrer,
-        lead.utmSource,
-        lead.utmMedium,
-        lead.utmCampaign,
-        lead.utmTerm,
-        lead.utmContent,
+        safeCell_(lead.formVersion),
+        safeCell_(lead.privacyVersion),
+        safeCell_(lead.pageUrl),
+        safeCell_(lead.landingPage),
+        safeCell_(lead.referrer),
+        safeCell_(lead.utmSource),
+        safeCell_(lead.utmMedium),
+        safeCell_(lead.utmCampaign),
+        safeCell_(lead.utmTerm),
+        safeCell_(lead.utmContent),
         identityHash,
         'Pending',
         `Form age: ${formAge} seconds`
@@ -197,23 +197,23 @@ function doPost(event) {
 
 function validateLead_(raw) {
   const lead = {
-    name: clean_(raw.name, 100),
-    company: clean_(raw.company, 120),
-    email: clean_(raw.email, 254).toLowerCase(),
-    phone: clean_(raw.phone, 50),
-    service: clean_(raw.service, 80),
+    name: singleLine_(raw.name, 100),
+    company: singleLine_(raw.company, 120),
+    email: singleLine_(raw.email, 254).toLowerCase(),
+    phone: singleLine_(raw.phone, 50),
+    service: singleLine_(raw.service, 80),
     message: clean_(raw.message, 4000),
-    consent: clean_(raw.consent, 10).toLowerCase(),
-    formVersion: clean_(raw.formVersion, 40),
-    privacyVersion: clean_(raw.privacyVersion, 40),
+    consent: singleLine_(raw.consent, 10).toLowerCase(),
+    formVersion: singleLine_(raw.formVersion, 40),
+    privacyVersion: singleLine_(raw.privacyVersion, 40),
     pageUrl: canonicalPageUrl_(raw.pageUrl),
     landingPage: safePath_(raw.landingPage),
     referrer: safeReferrer_(raw.referrer),
-    utmSource: clean_(raw.utmSource, 120),
-    utmMedium: clean_(raw.utmMedium, 120),
-    utmCampaign: clean_(raw.utmCampaign, 160),
-    utmTerm: clean_(raw.utmTerm, 160),
-    utmContent: clean_(raw.utmContent, 160)
+    utmSource: singleLine_(raw.utmSource, 120),
+    utmMedium: singleLine_(raw.utmMedium, 120),
+    utmCampaign: singleLine_(raw.utmCampaign, 160),
+    utmTerm: singleLine_(raw.utmTerm, 160),
+    utmContent: singleLine_(raw.utmContent, 160)
   };
 
   if (lead.name.length < 2) throw validationError_('name', 'Please enter your name.');
@@ -338,7 +338,13 @@ function ensureSheet_(spreadsheet, name, headers) {
 function logEvent_(spreadsheet, level, eventName, leadId, detail) {
   try {
     const sheet = ensureSheet_(spreadsheet, BAHOLO.LOG_SHEET, BAHOLO.LOG_HEADERS);
-    sheet.appendRow([new Date(), clean_(level, 12), clean_(eventName, 80), clean_(leadId, 40), clean_(detail, 500)]);
+    sheet.appendRow([
+      new Date(),
+      safeCell_(clean_(level, 12)),
+      safeCell_(clean_(eventName, 80)),
+      safeCell_(clean_(leadId, 40)),
+      safeCell_(clean_(detail, 500))
+    ]);
   } catch (error) {
     console.error(`Logging failed: ${safeError_(error)}`);
   }
@@ -356,18 +362,19 @@ function hash_(value) {
 }
 
 function canonicalPageUrl_(value) {
-  const cleaned = clean_(value, 500).split(/[?#]/)[0];
-  if (/^https:\/\/(www\.)?baholoprojects\.co\.za(?:\/|$)/i.test(cleaned)) return cleaned;
+  const cleaned = singleLine_(value, 500).split(/[?#]/)[0];
+  if (/^https:\/\/(www\.)?baholoprojects\.co\.za(?:\/[^\s]*)?$/i.test(cleaned)) return cleaned;
   return BAHOLO.DEFAULT_TARGET_ORIGIN + '/';
 }
 
 function safePath_(value) {
-  const cleaned = clean_(value, 300).split(/[?#]/)[0];
-  return cleaned.startsWith('/') ? cleaned : '/';
+  const cleaned = singleLine_(value, 300).split(/[?#]/)[0];
+  return /^\/[^\s]*$/.test(cleaned) ? cleaned : '/';
 }
 
 function safeReferrer_(value) {
-  return clean_(value, 500).split(/[?#]/)[0];
+  const cleaned = singleLine_(value, 500).split(/[?#]/)[0];
+  return /^https?:\/\/[^\s]+$/i.test(cleaned) ? cleaned : '';
 }
 
 function clean_(value, maxLength) {
@@ -375,6 +382,15 @@ function clean_(value, maxLength) {
     .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
     .trim()
     .slice(0, maxLength);
+}
+
+function singleLine_(value, maxLength) {
+  return clean_(value, maxLength).replace(/[\r\n\t]+/g, ' ').replace(/\s{2,}/g, ' ').trim();
+}
+
+function safeCell_(value) {
+  const text = String(value == null ? '' : value);
+  return /^\s*[=+\-@]/.test(text) ? `'${text}` : text;
 }
 
 function escapeHtml_(value) {
