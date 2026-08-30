@@ -16,6 +16,9 @@ Then open `http://127.0.0.1:4173`.
 
 - The production-domain DNS, redirect strategy, retained email records, and
   verification procedure are documented in [`docs/DOMAIN-DNS.md`](docs/DOMAIN-DNS.md).
+- Search Console ownership, sitemap handling, stale GoDaddy result recovery and
+  the post-launch monitoring process are documented in
+  [`docs/SEARCH-CONSOLE.md`](docs/SEARCH-CONSOLE.md).
 
 - All generated photographic assets used by the site are stored as WebP files in `assets/images/`.
 - The looping Inside Baholo strip uses the ordered WebP sequence in `assets/images/world/`.
