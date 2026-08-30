@@ -14,6 +14,9 @@ Then open `http://127.0.0.1:4173`.
 
 ## Production handover notes
 
+- The production-domain DNS, redirect strategy, retained email records, and
+  verification procedure are documented in [`docs/DOMAIN-DNS.md`](docs/DOMAIN-DNS.md).
+
 - All generated photographic assets used by the site are stored as WebP files in `assets/images/`.
 - The looping Inside Baholo strip uses the ordered WebP sequence in `assets/images/world/`.
 - `assets/videos/hero-welder.webm` is the silent primary hero video, with `hero-welder-silent.mp4` as the silent Safari fallback and `assets/images/hero-welder.webp` as the poster. The production-ready Google Flow/Omni brief is in `creative/Google-Flow-Hero-Video-Prompt.md`.
