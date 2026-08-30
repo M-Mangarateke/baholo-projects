@@ -30,7 +30,7 @@ the authoritative operational record.
 | Search | Domain property verified; three-page sitemap succeeds | Monitor indexing and the replacement of the stale GoDaddy result |
 | Analytics | GA4 property and stream created; consent-gated production tag and Realtime page views verified | Revalidate after releases; `generate_lead` is the only lead key event |
 | Business Profile | Accurate unverified service-business draft created | Real private operating/mailing address and Google verification remain human-controlled |
-| Lead backend | Production Apps Script source reconstructed with validation, Sheet logging and emails | Owner authorisation and web-app deployment are required before setting the endpoint URL |
+| Lead backend | Production Apps Script web app deployed and connected; private Sheet storage, administrator/visitor mail, acknowledgement and duplicate suppression verified | Keep the repository source and deployed version aligned; monitor `System Log`, mail status and quotas |
 
 ## Recovery rules
 

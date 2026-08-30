@@ -3,14 +3,16 @@
 ## Current state
 
 An unverified service-business profile was created on 30 August 2026. It is not
-visible to customers until Google verification succeeds.
+visible to customers until Google verification succeeds. The management panel
+subsequently confirmed the saved primary category, phone, canonical website,
+hours and broad automatic service area shown below.
 
 | Field | Configured value |
 | --- | --- |
 | Business name | Baholo Projects |
 | Business type | Service business; no public storefront claimed |
 | Primary category | Industrial equipment supplier |
-| Region | South Africa |
+| Service area shown by Google | South Africa — too broad; replace with accurate named areas |
 | Phone | 067 616 8687 |
 | Website | `https://www.baholoprojects.co.za/` |
 | Hours | Monday–Friday 08:00–16:00; Saturday–Sunday closed |

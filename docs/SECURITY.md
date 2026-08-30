@@ -23,8 +23,9 @@ is confirmed.
   email-header normalisation, formula-injection neutralisation, bounded logs
   and escaped email templates;
 - private Sheet ownership and origin-restricted acknowledgement;
-- form acknowledgements accepted only from the dedicated response iframe and
-  approved Apps Script/Googleusercontent origins;
+- form acknowledgements accepted only from approved
+  Apps Script/Googleusercontent origins when they also carry the exact random
+  token for the pending submission;
 - external links use `rel="noopener"` where a new tab is opened;
 - a strict-origin-when-cross-origin referrer policy on every public page;
 - reduced-motion and constrained-network media handling;

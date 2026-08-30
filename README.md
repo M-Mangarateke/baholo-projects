@@ -52,9 +52,10 @@ Then open `http://127.0.0.1:4173`.
 - The production GA4 measurement ID is public configuration, not a secret. It
   is stored in `site-config.js`; do not place Google account credentials or API
   secrets there.
-- The Apps Script backend source is in `apps-script/`. Keep
-  `LEAD_ENDPOINT_URL` blank until the owner has authorised, deployed and tested
-  the production web app.
+- The Apps Script backend source is in `apps-script/`. The production web app
+  is authorised, deployed and connected through `LEAD_ENDPOINT_URL`; its
+  health response, private Sheet row, two email paths, acknowledgement and
+  duplicate suppression were verified on 30 August 2026.
 - The Apps Script project and private Sheet should be owned by the Baholo
   administration account. Record access and recovery contacts privately.
 - Do not expose Google credentials or the Google Sheet itself in browser code.

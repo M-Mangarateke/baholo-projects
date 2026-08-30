@@ -26,8 +26,17 @@ Production Realtime validation on 30 August 2026 showed one active user in the
 last 30 minutes, the production page title, and page-view/engagement events.
 The tag was also verified to be absent before consent and loaded exactly once
 after consent. A non-sensitive production quote CTA generated one `cta_click`
-event in Realtime. The lead key event still requires the live Apps Script
-endpoint and a labelled end-to-end test submission.
+event in Realtime. Production `lead_form_start` and
+`lead_form_submit_attempt` events were also observed during the labelled
+end-to-end lead test.
+
+The labelled unique lead was stored and emailed before the response-bridge fix
+could return success to the browser, so that attempt correctly did not emit a
+client-side `generate_lead`. The corrected duplicate test returned the stored
+reference and intentionally did not count as a new lead. The next genuine,
+newly stored, consented enquiry is therefore the remaining live observation
+for `generate_lead`; do not fabricate a conversion or count a duplicate merely
+to populate the report.
 
 ## Consent implementation
 

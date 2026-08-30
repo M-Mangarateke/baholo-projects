@@ -49,8 +49,10 @@ inside the configured window. It is not an authentication credential.
 - HTML escaping and plain-text alternatives for email;
 - Sheet-first persistence so an email failure does not lose the enquiry;
 - public errors omit stack traces and internal account details;
-- browser acknowledgements must come from the dedicated form iframe and an
-  approved Apps Script/Googleusercontent origin;
+- browser acknowledgements must come from an approved
+  Apps Script/Googleusercontent origin and carry the exact random token for the
+  pending submission; this accommodates Apps Script's nested HTML sandbox
+  without accepting unrelated cross-frame messages;
 - timeout and direct email/WhatsApp fallback on the website.
 
 Apps Script does not reliably provide the visitor IP address. If spam becomes
@@ -73,6 +75,22 @@ After deploying the Apps Script web app and adding its `/exec` URL:
    consent was granted, and no event when consent was declined.
 7. Remove the labelled test row only through the approved retention/test-data
    process; do not delete operational leads casually.
+
+## Release evidence — 30 August 2026
+
+- The public `/exec` health response returned the expected service/version
+  JSON.
+- The first production attempt exposed and led to correction of a client-side
+  form-age reset; the rejected attempt created no lead or email.
+- The corrected labelled enquiry created exactly one `New` row with a reference
+  and `Admin sent; visitor sent` email status.
+- Gmail showed both the administrator notification and visitor acknowledgement
+  for that reference.
+- A secured token-bound acknowledgement returned the reference to the website.
+- Repeating the identical enquiry inside 15 minutes returned the same reference,
+  logged `duplicate_returned` and left the workbook at one lead row.
+- Temporary private diagnostic functions used to verify counts/status were
+  removed; the saved Apps Script editor source matches `apps-script/Code.gs`.
 
 ## Failure handling
 

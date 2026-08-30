@@ -7,7 +7,10 @@ should be owned by the Baholo administration account.
 The browser never receives Google credentials or Sheet access. It submits a
 normal HTML form to the public Apps Script web-app URL in a hidden iframe. The
 script validates and stores the lead, sends emails, then returns a tightly
-scoped `postMessage` acknowledgement to the production website.
+scoped `postMessage` acknowledgement to the production website. Apps Script
+serves HTML through a nested sandbox, so acknowledgements are accepted only
+from approved Google origins when they carry the exact pending submission
+token.
 
 ## Deployment
 
@@ -64,7 +67,8 @@ changes. Do not put passwords or private API material in these properties.
 - query-free page/referrer storage and bounded UTM fields;
 - HTML escaping in emails;
 - private error logging with non-sensitive public responses;
-- acknowledgement restricted to the canonical production origin.
+- acknowledgement restricted to the canonical production origin and bound to
+  the random pending submission token.
 
 Apps Script cannot reliably expose the visitor IP address, so rate limiting is
 keyed to a one-way email hash. If abuse becomes material, add a server-verified
