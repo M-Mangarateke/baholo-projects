@@ -89,6 +89,12 @@ Baholo title while the apex homepage result still showed the old GoDaddy/Airo
 content. That mixed state confirms processing is occurring URL by URL; it does
 not justify repeated indexing requests or temporary-removal tools.
 
+A subsequent live search on 30 August showed the homepage with the corrected
+Baholo title and industrial-services description; the GoDaddy/Airo title and
+free-credit snippet were absent. Continue normal monitoring because Google may
+still recalculate snippets, favicons, canonical selection and rankings over
+time.
+
 ## Monitoring checklist
 
 For the first four weeks after launch, check Search Console weekly:

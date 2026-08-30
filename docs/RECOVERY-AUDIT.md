@@ -27,7 +27,7 @@ the authoritative operational record.
 | Lost local logs | Development and account-operation logs were not present in Git | Deployment history, external setup state and troubleshooting procedures have been reconstructed |
 | Domain | GoDaddy DNS points to GitHub Pages; email DNS was preserved | Authoritative record is `DOMAIN-DNS.md` |
 | HTTPS | GitHub Pages certificate covers apex and `www`; HTTPS is enforced | Check certificate and redirects after DNS or Pages changes |
-| Search | Domain property verified; three-page sitemap succeeds | Monitor indexing and the replacement of the stale GoDaddy result |
+| Search | Domain property verified; three-page sitemap succeeds; Google search showed the corrected Baholo homepage title and description on 30 August 2026 | Continue indexing, coverage and enhancement monitoring |
 | Analytics | GA4 property and stream created; consent-gated production tag and Realtime page views verified | Revalidate after releases; `generate_lead` is the only lead key event |
 | Business Profile | Accurate unverified service-business draft created | Real private operating/mailing address and Google verification remain human-controlled |
 | Lead backend | Production Apps Script web app deployed and connected; private Sheet storage, administrator/visitor mail, acknowledgement and duplicate suppression verified | Keep the repository source and deployed version aligned; monitor `System Log`, mail status and quotas |
