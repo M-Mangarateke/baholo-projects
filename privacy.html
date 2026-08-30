@@ -13,7 +13,7 @@
   <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon-48.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest?v=20260708e">
-  <link rel="stylesheet" href="styles.css?v=20260730l">
+  <link rel="stylesheet" href="styles.css?v=20260830a">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_ZA">
@@ -66,7 +66,7 @@
     </a>
     <div class="header-actions">
       <a class="header-contact" href="index.html#contact">Contact</a>
-      <a class="header-cta" href="index.html#contact" data-track="cta_click">Request a quote</a>
+      <a class="header-cta" href="index.html#contact" data-track="cta_click" data-cta-location="header">Request a quote</a>
     </div>
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span><span></span><span></span>
@@ -85,8 +85,8 @@
       <a href="index.html#contact"><span>04</span>Contact</a>
     </nav>
     <div class="mobile-menu__footer">
-      <a href="mailto:info@baholoprojects.co.za">info@baholoprojects.co.za</a>
-      <a href="https://wa.me/27676168687?text=Hello%20Baholo%20Projects%2C%20I%20would%20like%20to%20discuss%20a%20requirement." target="_blank" rel="noopener" data-track="whatsapp_click">Continue on WhatsApp</a>
+      <a href="mailto:info@baholoprojects.co.za" data-track="contact_click" data-contact-method="email">info@baholoprojects.co.za</a>
+      <a href="https://wa.me/27676168687?text=Hello%20Baholo%20Projects%2C%20I%20would%20like%20to%20discuss%20a%20requirement." target="_blank" rel="noopener" data-track="contact_click" data-contact-method="whatsapp">Continue on WhatsApp</a>
     </div>
   </aside>
 
@@ -94,7 +94,7 @@
     <section class="privacy-hero" aria-labelledby="privacy-title">
       <div class="privacy-hero__aside">
         <p class="section-label">Privacy notice</p>
-        <p>Version: 2026-07-09</p>
+        <p>Version: 2026-08-30</p>
       </div>
       <div class="privacy-hero__copy">
         <h1 id="privacy-title">How we handle <span>enquiry data.</span></h1>
@@ -108,6 +108,7 @@
         <a href="#collect">What we collect</a>
         <a href="#use">How we use it</a>
         <a href="#sharing">Who can access it</a>
+        <a href="#analytics">Analytics and cookies</a>
         <a href="#retention">Retention</a>
         <a href="#rights">Your rights</a>
       </nav>
@@ -125,7 +126,7 @@
           <h2>Information collected</h2>
           <div>
             <p>When you submit an enquiry, Baholo Projects may collect your name, company name, email address, phone or WhatsApp number if supplied, selected service, message, consent confirmation, submission time, page URL, referrer and campaign/source fields if present.</p>
-            <p>Google Analytics 4 and Google Search Console may be used to understand website traffic, search visibility and form performance. These tools are used for website improvement and reporting, not for selling personal information.</p>
+            <p>Google Search Console is used to understand public search visibility and indexing. It does not require the website to place analytics cookies in your browser.</p>
           </div>
         </section>
 
@@ -149,6 +150,15 @@
             <p>Access to enquiry data is limited to Baholo Projects administration and approved oversight/support users who need access to manage, review or support the lead system.</p>
             <p>The system may use Google Sheets, Google Apps Script and email services to store leads and send notifications. Website hosting, analytics and WhatsApp may process limited technical or usage information according to their own platform terms.</p>
             <p>Baholo Projects does not sell enquiry information.</p>
+          </div>
+        </section>
+
+        <section class="privacy-section" id="analytics">
+          <h2>Analytics, cookies and storage</h2>
+          <div>
+            <p>Google Analytics 4 is optional. The Google Analytics tag is not loaded unless you select “Allow analytics” in the website consent notice. If allowed, Analytics may use cookies or similar identifiers to measure page views, broad traffic sources and selected website interactions such as contact clicks and successful enquiry submissions.</p>
+            <p>The website stores your analytics choice in local storage so it can remember whether Analytics is allowed. Advertising storage, advertising user data and advertising personalisation are disabled. Analytics events must not contain enquiry names, email addresses, phone numbers or message content.</p>
+            <p>You can reopen the consent choice using “Cookie settings” in the footer. Declining Analytics does not prevent you from viewing the site, emailing Baholo Projects, opening WhatsApp or submitting an enquiry once the lead system is available.</p>
           </div>
         </section>
 
@@ -183,6 +193,8 @@
       <a href="index.html#approach">Approach</a>
       <a href="index.html#contact">Contact</a>
       <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <button class="footer-link-button" type="button" data-consent-settings>Cookie settings</button>
     </nav>
     <div class="footer-meta">
       <p>Baholo Projects (Pty) Ltd</p>
@@ -192,7 +204,18 @@
     </div>
   </footer>
 
-  <script src="site-config.js?v=20260730l" defer></script>
-  <script src="script.js?v=20260730l" defer></script>
+  <section class="consent-banner" data-consent-banner aria-label="Analytics consent" hidden>
+    <div>
+      <strong>Optional website analytics</strong>
+      <p>Baholo Projects uses Google Analytics only with your permission to understand website use and improve enquiries. Advertising storage and personalisation remain disabled. Read this privacy notice.</p>
+    </div>
+    <div class="consent-banner__actions">
+      <button type="button" data-consent-decline>Decline analytics</button>
+      <button class="consent-banner__accept" type="button" data-consent-accept>Allow analytics</button>
+    </div>
+  </section>
+
+  <script src="site-config.js?v=20260830a" defer></script>
+  <script src="script.js?v=20260830a" defer></script>
 </body>
 </html>

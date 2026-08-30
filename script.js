@@ -52,32 +52,120 @@
     }
   }
 
-  window.dataLayer = window.dataLayer || [];
   const GA_MEASUREMENT_ID = leadConfig.GA_MEASUREMENT_ID || '';
+  const ANALYTICS_CONSENT_KEY = 'baholo_analytics_consent_v1';
+  const ANALYTICS_HOSTS = new Set(['baholoprojects.co.za', 'www.baholoprojects.co.za']);
+  const consentBanner = document.querySelector('[data-consent-banner]');
+  const consentAccept = document.querySelector('[data-consent-accept]');
+  const consentDecline = document.querySelector('[data-consent-decline]');
+  const consentSettings = document.querySelector('[data-consent-settings]');
+  let analyticsEnabled = false;
+  let analyticsLoaded = false;
 
-  function trackEvent(name, parameters = {}) {
-    window.dataLayer.push({ event: name, ...parameters });
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', name, parameters);
+  const readAnalyticsConsent = () => {
+    try {
+      const value = window.localStorage.getItem(ANALYTICS_CONSENT_KEY);
+      return value === 'granted' || value === 'denied' ? value : '';
+    } catch (error) {
+      return '';
     }
-  }
+  };
 
-  if (GA_MEASUREMENT_ID) {
+  const storeAnalyticsConsent = (value) => {
+    try {
+      window.localStorage.setItem(ANALYTICS_CONSENT_KEY, value);
+    } catch (error) {
+      // Continue for the current page when storage is unavailable.
+    }
+  };
+
+  const consentState = (analyticsStorage) => ({
+    analytics_storage: analyticsStorage,
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied'
+  });
+
+  const loadAnalytics = () => {
+    if (!GA_MEASUREMENT_ID || analyticsLoaded || !ANALYTICS_HOSTS.has(window.location.hostname)) return;
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
+    window.gtag('consent', 'default', consentState('denied'));
+    window.gtag('consent', 'update', consentState('granted'));
+
     const gaScript = document.createElement('script');
     gaScript.async = true;
-    gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`;
     document.head.appendChild(gaScript);
-    window.gtag = function gtag() { window.dataLayer.push(arguments); };
+
     window.gtag('js', new Date());
-    window.gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+    window.gtag('config', GA_MEASUREMENT_ID, {
+      anonymize_ip: true,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false
+    });
+
+    analyticsLoaded = true;
+    analyticsEnabled = true;
+  };
+
+  const showConsentBanner = (moveFocus = false) => {
+    if (!consentBanner) return;
+    consentBanner.hidden = false;
+    if (moveFocus) consentAccept?.focus();
+  };
+
+  const hideConsentBanner = () => {
+    if (consentBanner) consentBanner.hidden = true;
+  };
+
+  const applyAnalyticsConsent = (value) => {
+    storeAnalyticsConsent(value);
+    if (value === 'granted') {
+      if (analyticsLoaded) {
+        analyticsEnabled = true;
+        window.gtag?.('consent', 'update', consentState('granted'));
+      } else {
+        loadAnalytics();
+      }
+    } else {
+      analyticsEnabled = false;
+      window.gtag?.('consent', 'update', consentState('denied'));
+    }
+    hideConsentBanner();
+  };
+
+  const storedAnalyticsConsent = readAnalyticsConsent();
+  if (storedAnalyticsConsent === 'granted') loadAnalytics();
+  else if (!storedAnalyticsConsent) showConsentBanner();
+
+  consentAccept?.addEventListener('click', () => applyAnalyticsConsent('granted'));
+  consentDecline?.addEventListener('click', () => applyAnalyticsConsent('denied'));
+  consentSettings?.addEventListener('click', () => showConsentBanner(true));
+
+  function trackEvent(name, parameters = {}) {
+    if (!analyticsEnabled || typeof window.gtag !== 'function') return;
+    window.gtag('event', name, parameters);
   }
 
   document.querySelectorAll('[data-track]').forEach((element) => {
     element.addEventListener('click', () => {
-      trackEvent(element.dataset.track, {
-        link_text: element.textContent.trim(),
-        link_url: element.href || ''
-      });
+      const parameters = { link_text: element.textContent.trim().slice(0, 100) };
+      if (element.dataset.contactMethod) parameters.contact_method = element.dataset.contactMethod;
+      if (element.dataset.ctaLocation) parameters.cta_location = element.dataset.ctaLocation;
+      if (element.href) {
+        try {
+          const url = new URL(element.href, window.location.href);
+          if (url.protocol === 'http:' || url.protocol === 'https:') {
+            parameters.link_domain = url.hostname;
+            parameters.link_path = url.pathname;
+          }
+        } catch (error) {
+          // Event names and non-sensitive labels are sufficient when parsing fails.
+        }
+      }
+      trackEvent(element.dataset.track, parameters);
     });
   });
 
@@ -361,8 +449,7 @@
       form.reset();
       setFormMetadata();
       formStarted = false;
-      trackEvent('lead_form_submit', { form_name: 'quote_enquiry', lead_id: data.leadId, duplicate: Boolean(data.duplicate) });
-      trackEvent('thank_you_view', { form_name: 'quote_enquiry', mode: 'inline_confirmation' });
+      trackEvent('generate_lead', { form_name: 'quote_enquiry', duplicate: Boolean(data.duplicate) });
       return;
     }
 

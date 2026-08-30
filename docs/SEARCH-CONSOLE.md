@@ -10,6 +10,7 @@
 | Sitemap | `https://www.baholoprojects.co.za/sitemap.xml` |
 | Robots file | `https://www.baholoprojects.co.za/robots.txt` |
 | Ownership status | Verified on 2026-08-30 using a DNS TXT record |
+| Sitemap status | Submitted successfully on 2026-08-30 |
 
 The Domain property is intentional: it covers HTTP and HTTPS plus the apex and
 all subdomains. GitHub Pages redirects the HTTP and apex variants to the
@@ -61,7 +62,27 @@ immediate visual update. Recrawling and reprocessing can take days or weeks.
    the production `www` URL as canonical.
 7. Request indexing only for public pages that should appear in search. Do not
    request indexing for redirect URLs, duplicate variants, or internal pages.
-8. Inspect `https://www.baholoprojects.co.za/privacy.html` after the homepage.
+8. Inspect `https://www.baholoprojects.co.za/privacy.html` and
+   `https://www.baholoprojects.co.za/terms.html` after the homepage.
+
+## Launch record
+
+On 30 August 2026, the production sitemap was submitted successfully. The
+homepage and privacy notice passed Google's live URL test and indexing requests
+were queued for the canonical homepage, the legacy apex URL and the privacy
+notice. The apex request is a migration signal only: it redirects to the
+canonical `www` homepage and should not remain a separately indexed result.
+
+At the time of launch, Google's stored apex result still represented the former
+GoDaddy/Airo page crawled on 27 August 2026. The live test subsequently saw the
+Baholo site and its `www` canonical. This record explains why a stale GoDaddy
+title, description or icon may remain temporarily even though DNS and the live
+page are correct.
+
+After the terms page is deployed, the sitemap contains three canonical URLs:
+the homepage, privacy notice and website terms. Confirm that Search Console's
+discovered-page count updates from two to three after Google next reads the
+sitemap.
 
 ## Monitoring checklist
 
@@ -94,4 +115,3 @@ verified property.
   hostname.
 - **Wrong favicon remains:** confirm the homepage and favicon are crawlable and
   the favicon is a stable square image. Google may still need time to recrawl it.
-

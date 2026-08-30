@@ -2274,6 +2274,20 @@ body.dialog-open {
 .site-footer nav a:hover,
 .site-footer nav a:focus-visible { color: var(--orange); }
 
+.footer-link-button {
+  width: fit-content;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.footer-link-button:hover,
+.footer-link-button:focus-visible { color: var(--orange); }
+
 .footer-meta {
   border-right: 0;
   color: rgba(255, 255, 255, .6);
@@ -2297,6 +2311,73 @@ body.dialog-open {
 
 .footer-credit a:hover,
 .footer-credit a:focus-visible { color: var(--orange); }
+
+.consent-banner {
+  position: fixed;
+  z-index: 1200;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem;
+  align-items: center;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 1.4rem 1.5rem;
+  color: var(--white);
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, .24);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, .34);
+}
+
+.consent-banner[hidden] { display: none; }
+
+.consent-banner strong {
+  display: block;
+  margin-bottom: .35rem;
+  font-size: .95rem;
+}
+
+.consent-banner p {
+  max-width: 52rem;
+  margin: 0;
+  color: rgba(255, 255, 255, .72);
+  font-size: .82rem;
+  line-height: 1.55;
+}
+
+.consent-banner a {
+  color: var(--white);
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-underline-offset: .25em;
+}
+
+.consent-banner__actions {
+  display: flex;
+  gap: .65rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.consent-banner__actions button {
+  min-height: 2.75rem;
+  padding: .65rem .9rem;
+  color: var(--white);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, .38);
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.consent-banner__actions .consent-banner__accept {
+  color: var(--black);
+  background: var(--orange);
+  border-color: var(--orange);
+}
 
 .privacy-main {
   min-height: 100vh;
@@ -2879,6 +2960,13 @@ body.dialog-open {
   .privacy-section h2 {
     margin-bottom: 1.25rem;
   }
+
+  .consent-banner {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .consent-banner__actions { justify-content: flex-start; }
 }
 
 @media (max-width: 540px) {

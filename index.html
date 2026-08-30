@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest?v=20260708e">
   <link rel="preload" as="image" href="assets/images/hero-welder.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css?v=20260730l">
+  <link rel="stylesheet" href="styles.css?v=20260830a">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_ZA">
@@ -101,6 +101,75 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.baholoprojects.co.za/#webpage",
+        "url": "https://www.baholoprojects.co.za/",
+        "name": "Baholo Projects | Industrial Supply, Pipework & Fabrication",
+        "description": "Baholo Projects provides industrial supplies, pipework installation, welding and fabrication, consulting and scaffolding services in South Africa.",
+        "isPartOf": {"@id": "https://www.baholoprojects.co.za/#website"},
+        "about": {"@id": "https://www.baholoprojects.co.za/#organization"},
+        "inLanguage": "en-ZA",
+        "dateModified": "2026-08-30"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.baholoprojects.co.za/#industrial-supplies",
+        "name": "Industrial supplies",
+        "serviceType": "Industrial component supply",
+        "description": "Pipes, valves, pumps, fittings, bolts, nuts and other industrial components supplied to project requirements.",
+        "provider": {"@id": "https://www.baholoprojects.co.za/#organization"},
+        "areaServed": {"@type": "Country", "name": "South Africa"},
+        "url": "https://www.baholoprojects.co.za/#services"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.baholoprojects.co.za/#welding-fabrication",
+        "name": "Welding and fabrication",
+        "serviceType": "Industrial welding and fabrication",
+        "description": "Fabrication, modification and practical design of new or existing systems, completed with care.",
+        "provider": {"@id": "https://www.baholoprojects.co.za/#organization"},
+        "areaServed": {"@type": "Country", "name": "South Africa"},
+        "url": "https://www.baholoprojects.co.za/#services"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.baholoprojects.co.za/#industrial-consulting",
+        "name": "Industrial consulting",
+        "serviceType": "Industrial project consulting",
+        "description": "Practical consulting support to clarify industrial, fabrication and project requirements before delivery.",
+        "provider": {"@id": "https://www.baholoprojects.co.za/#organization"},
+        "areaServed": {"@type": "Country", "name": "South Africa"},
+        "url": "https://www.baholoprojects.co.za/#services"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.baholoprojects.co.za/#scaffolding",
+        "name": "Scaffolding services",
+        "serviceType": "Temporary access scaffolding",
+        "description": "Scaffolding services for temporary access requirements, scoped to the site and project brief.",
+        "provider": {"@id": "https://www.baholoprojects.co.za/#organization"},
+        "areaServed": {"@type": "Country", "name": "South Africa"},
+        "url": "https://www.baholoprojects.co.za/#services"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.baholoprojects.co.za/#pipework",
+        "name": "Pipework supply and installation",
+        "serviceType": "Industrial pipework supply and installation",
+        "description": "Pipework component supply and installation supported by fabrication or modification where required.",
+        "provider": {"@id": "https://www.baholoprojects.co.za/#organization"},
+        "areaServed": {"@type": "Country", "name": "South Africa"},
+        "url": "https://www.baholoprojects.co.za/#pipework"
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
       {
@@ -150,7 +219,7 @@
     </a>
     <div class="header-actions">
       <a class="header-contact" href="#contact">Contact</a>
-      <a class="header-cta" href="#contact" data-track="cta_click">Request a quote</a>
+      <a class="header-cta" href="#contact" data-track="cta_click" data-cta-location="header">Request a quote</a>
     </div>
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span><span></span><span></span>
@@ -169,8 +238,8 @@
       <a href="#contact"><span>04</span>Contact</a>
     </nav>
     <div class="mobile-menu__footer">
-      <a href="mailto:info@baholoprojects.co.za">info@baholoprojects.co.za</a>
-      <a href="https://wa.me/27676168687?text=Hello%20Baholo%20Projects%2C%20I%20would%20like%20to%20discuss%20a%20requirement." target="_blank" rel="noopener" data-track="whatsapp_click">Continue on WhatsApp</a>
+      <a href="mailto:info@baholoprojects.co.za" data-track="contact_click" data-contact-method="email">info@baholoprojects.co.za</a>
+      <a href="https://wa.me/27676168687?text=Hello%20Baholo%20Projects%2C%20I%20would%20like%20to%20discuss%20a%20requirement." target="_blank" rel="noopener" data-track="contact_click" data-contact-method="whatsapp">Continue on WhatsApp</a>
     </div>
   </aside>
 
@@ -315,7 +384,7 @@
       <div class="pipework-grid">
         <article class="pipe-card reveal">
           <figure>
-            <img src="assets/images/world/world-2.jpg" alt="A dense arrangement of industrial pipework, valves and connected processing equipment" width="960" height="1280" loading="lazy" decoding="async">
+            <img src="assets/images/world/world-2.webp" alt="A dense arrangement of industrial pipework, valves and connected processing equipment" width="540" height="720" loading="lazy" decoding="async">
           </figure>
           <div class="pipe-card__copy">
             <span>01 / System view</span>
@@ -394,7 +463,7 @@
         <div class="pipe-dialog__shell">
           <button class="pipe-dialog__close" type="button" data-dialog-close aria-label="Close connecting the process story"><span></span><span></span></button>
           <figure class="pipe-dialog__media">
-            <img src="assets/images/world/world-2.jpg" alt="A dense arrangement of industrial pipework, valves and connected processing equipment" width="960" height="1280" loading="lazy" decoding="async">
+            <img src="assets/images/world/world-2.webp" alt="A dense arrangement of industrial pipework, valves and connected processing equipment" width="540" height="720" loading="lazy" decoding="async">
           </figure>
           <div class="pipe-dialog__copy">
             <p class="pipe-dialog__eyebrow">01 / Pipework story</p>
@@ -588,8 +657,8 @@
           <span>Industrial Supply | Pipework | Fabrication | Scaffolding</span>
         </div>
         <div class="direct-links">
-          <a href="mailto:info@baholoprojects.co.za">info@baholoprojects.co.za</a>
-          <a href="https://wa.me/27676168687?text=Hello%20Baholo%20Projects%2C%20I%20would%20like%20to%20discuss%20a%20requirement." target="_blank" rel="noopener" data-track="whatsapp_click">Continue on WhatsApp</a>
+          <a href="mailto:info@baholoprojects.co.za" data-track="contact_click" data-contact-method="email">info@baholoprojects.co.za</a>
+          <a href="https://wa.me/27676168687?text=Hello%20Baholo%20Projects%2C%20I%20would%20like%20to%20discuss%20a%20requirement." target="_blank" rel="noopener" data-track="contact_click" data-contact-method="whatsapp">Continue on WhatsApp</a>
         </div>
       </div>
 
@@ -658,6 +727,8 @@
       <a href="#approach">Approach</a>
       <a href="#contact">Contact</a>
       <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <button class="footer-link-button" type="button" data-consent-settings>Cookie settings</button>
     </nav>
     <div class="footer-meta">
       <p>Baholo Projects (Pty) Ltd</p>
@@ -667,7 +738,18 @@
     </div>
   </footer>
 
-  <script src="site-config.js?v=20260730l" defer></script>
-  <script src="script.js?v=20260730l" defer></script>
+  <section class="consent-banner" data-consent-banner aria-label="Analytics consent" hidden>
+    <div>
+      <strong>Optional website analytics</strong>
+      <p>Baholo Projects uses Google Analytics only with your permission to understand website use and improve enquiries. Advertising storage and personalisation remain disabled. Read the <a href="privacy.html#analytics">privacy notice</a>.</p>
+    </div>
+    <div class="consent-banner__actions">
+      <button type="button" data-consent-decline>Decline analytics</button>
+      <button class="consent-banner__accept" type="button" data-consent-accept>Allow analytics</button>
+    </div>
+  </section>
+
+  <script src="site-config.js?v=20260830a" defer></script>
+  <script src="script.js?v=20260830a" defer></script>
 </body>
 </html>
