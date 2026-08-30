@@ -95,6 +95,7 @@ function doGet() {
 function doPost(event) {
   let spreadsheet;
   let leadId = '';
+  let responseToken = '';
 
   try {
     const properties = PropertiesService.getScriptProperties();
@@ -103,14 +104,15 @@ function doPost(event) {
 
     spreadsheet = SpreadsheetApp.openById(spreadsheetId);
     const raw = event && event.parameter ? event.parameter : {};
+    responseToken = clean_(raw.submissionToken, 80);
 
     if (clean_(raw.website, 200)) {
       logEvent_(spreadsheet, 'WARN', 'honeypot_rejected', '', 'A non-empty honeypot field was rejected.');
-      return response_({ ok: false, reason: 'validation_failed', message: 'The enquiry could not be accepted.' });
+      return response_({ ok: false, reason: 'validation_failed', message: 'The enquiry could not be accepted.' }, responseToken);
     }
 
     const formAge = validateFormAge_(raw.formLoadedAt);
-    const submissionToken = clean_(raw.submissionToken, 80);
+    const submissionToken = responseToken;
     if (!submissionToken || !/^[a-f0-9-]{20,80}$/i.test(submissionToken)) {
       throw validationError_('submission_token', 'Please reload the page and try again.');
     }
@@ -130,7 +132,7 @@ function doPost(event) {
       const replayLeadId = CacheService.getScriptCache().get(tokenKey);
       if (replayLeadId) {
         logEvent_(spreadsheet, 'INFO', 'submission_replayed', replayLeadId, 'An already processed submission token was returned.');
-        return response_({ ok: true, duplicate: true, leadId: replayLeadId });
+        return response_({ ok: true, duplicate: true, leadId: replayLeadId }, responseToken);
       }
 
       enforceGlobalRateLimit_();
@@ -138,7 +140,7 @@ function doPost(event) {
       const duplicate = findRecentDuplicate_(spreadsheet, identityHash);
       if (duplicate) {
         logEvent_(spreadsheet, 'INFO', 'duplicate_returned', duplicate.leadId, `Duplicate within ${BAHOLO.DUPLICATE_WINDOW_MINUTES} minutes.`);
-        return response_({ ok: true, duplicate: true, leadId: duplicate.leadId });
+        return response_({ ok: true, duplicate: true, leadId: duplicate.leadId }, responseToken);
       }
 
       leadId = createLeadId_();
@@ -181,7 +183,7 @@ function doPost(event) {
     leadsSheet.getRange(row, 22).setValue(emailStatus);
     logEvent_(spreadsheet, emailStatus === 'Admin sent; visitor sent' ? 'INFO' : 'WARN', 'lead_stored', leadId, emailStatus);
 
-    return response_({ ok: true, duplicate: false, leadId: leadId });
+    return response_({ ok: true, duplicate: false, leadId: leadId }, responseToken);
   } catch (error) {
     const reason = error && error.name === 'ValidationError' ? error.reason : 'server_error';
     const publicMessage = error && error.name === 'ValidationError'
@@ -191,7 +193,7 @@ function doPost(event) {
     if (spreadsheet) {
       logEvent_(spreadsheet, 'ERROR', reason, leadId, safeError_(error));
     }
-    return response_({ ok: false, reason: reason, message: publicMessage });
+    return response_({ ok: false, reason: reason, message: publicMessage }, responseToken);
   }
 }
 
@@ -313,15 +315,19 @@ function sendLeadEmails_(lead, leadId, receivedAt, properties) {
   return `${adminSent ? 'Admin sent' : 'Admin failed'}; ${visitorSent ? 'visitor sent' : 'visitor failed'}`;
 }
 
-function response_(payload) {
+function response_(payload, submissionToken) {
   const properties = PropertiesService.getScriptProperties();
   const configuredOrigin = properties.getProperty('TARGET_ORIGIN') || BAHOLO.DEFAULT_TARGET_ORIGIN;
   const targetOrigin = /^https:\/\/[a-z0-9.-]+$/i.test(configuredOrigin)
     ? configuredOrigin
     : BAHOLO.DEFAULT_TARGET_ORIGIN;
-  const serialized = JSON.stringify(payload).replace(/</g, '\\u003c');
+  const clientPayload = Object.assign({
+    source: 'baholo-lead-form',
+    submissionToken: clean_(submissionToken, 80)
+  }, payload);
+  const serialized = JSON.stringify(clientPayload).replace(/</g, '\\u003c');
   const message = payload.ok ? 'Submission processed.' : 'Submission could not be processed.';
-  const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>Baholo Projects enquiry</title></head><body><p>${message}</p><script>parent.postMessage(${serialized}, ${JSON.stringify(targetOrigin)});<\/script></body></html>`;
+  const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>Baholo Projects enquiry</title></head><body><p>${message}</p><script>window.top.postMessage(${serialized}, ${JSON.stringify(targetOrigin)});<\/script></body></html>`;
   return HtmlService.createHtmlOutput(html)
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }

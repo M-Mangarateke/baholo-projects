@@ -371,9 +371,9 @@
   });
 
   const form = document.querySelector('[data-lead-form]');
-  const leadResponseFrame = document.querySelector('iframe[name="lead-submit-frame"]');
   let formStarted = false;
   let leadSubmitTimeout;
+  let pendingSubmissionToken = '';
 
   const getEndpointOrigin = () => {
     try {
@@ -451,12 +451,16 @@
   }, { once: true });
 
   window.addEventListener('message', (event) => {
-    if (!form || event.source !== leadResponseFrame?.contentWindow || !isAllowedLeadResponseOrigin(event.origin)) return;
+    if (!form || !isAllowedLeadResponseOrigin(event.origin)) return;
     const data = event.data || {};
-    if (data.source !== 'baholo-lead-form') return;
+    // Apps Script HTML output runs inside a nested Google sandbox, so its
+    // WindowProxy differs from the outer response iframe. The Google origin
+    // allowlist plus the per-submission token authenticates the acknowledgement.
+    if (data.source !== 'baholo-lead-form' || !pendingSubmissionToken || data.submissionToken !== pendingSubmissionToken) return;
 
     window.clearTimeout(leadSubmitTimeout);
     setSubmitState(false);
+    pendingSubmissionToken = '';
 
     if (data.ok) {
       const duplicateNotice = data.duplicate ? ' This may match a previous enquiry, so the administrator will review it carefully.' : '';
@@ -505,6 +509,7 @@
 
     // Preserve the timestamp and token created when the form was displayed.
     // Regenerating them here makes a legitimate submission look instant.
+    pendingSubmissionToken = form.querySelector('[data-submission-token]')?.value || '';
     setSubmitState(true);
     setFormStatus('Sending enquiry...', 'pending');
     trackEvent('lead_form_submit_attempt', { form_name: 'quote_enquiry' });
