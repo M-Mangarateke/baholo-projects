@@ -503,7 +503,8 @@
       return;
     }
 
-    setFormMetadata();
+    // Preserve the timestamp and token created when the form was displayed.
+    // Regenerating them here makes a legitimate submission look instant.
     setSubmitState(true);
     setFormStatus('Sending enquiry...', 'pending');
     trackEvent('lead_form_submit_attempt', { form_name: 'quote_enquiry' });
