@@ -1,0 +1,467 @@
+<script>
+  (() => {
+    'use strict';
+
+    const SESSION_KEY = 'baholo_admin_session_v1';
+    const state = {
+      sessionToken: '',
+      user: null,
+      options: null,
+      filters: { page: 1, pageSize: 50 },
+      leadPage: null,
+      leadsLoaded: false,
+      analyticsLoaded: false
+    };
+
+    const one = (selector, root = document) => root.querySelector(selector);
+    const all = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+    const loadingScreen = one('[data-loading-screen]');
+    const loginShell = one('[data-login]');
+    const appShell = one('[data-app]');
+
+    document.addEventListener('DOMContentLoaded', initialise);
+
+    async function initialise() {
+      bindStaticEvents();
+      const storedToken = sessionStorage.getItem(SESSION_KEY) || '';
+      if (storedToken) {
+        state.sessionToken = storedToken;
+        const ready = await tryBootstrap();
+        if (ready) return;
+        clearSession();
+      }
+
+      const magicToken = window.BAHOLO_ADMIN_BOOT.magicToken || '';
+      if (magicToken) {
+        const redeemed = await redeemMagicLink(magicToken);
+        if (redeemed) return;
+      }
+      showLogin();
+    }
+
+    function bindStaticEvents() {
+      one('[data-login-form]').addEventListener('submit', requestLink);
+      one('[data-sign-out]').addEventListener('click', signOut);
+      all('[data-view-button]').forEach((button) => button.addEventListener('click', () => showView(button.dataset.viewButton)));
+      one('[data-analytics-range]').addEventListener('change', () => loadAnalytics(true));
+      one('[data-filter-form]').addEventListener('submit', applyFilters);
+      one('[data-filter-form]').addEventListener('reset', () => window.setTimeout(() => {
+        state.filters = { page: 1, pageSize: 50 };
+        loadLeads();
+      }, 0));
+      one('[data-page-prev]').addEventListener('click', () => changePage(-1));
+      one('[data-page-next]').addEventListener('click', () => changePage(1));
+      one('[data-lead-rows]').addEventListener('click', (event) => {
+        const button = event.target.closest('[data-open-lead]');
+        if (button) openLead(button.dataset.openLead);
+      });
+      all('[data-detail-close]').forEach((button) => button.addEventListener('click', closeDetail));
+      one('[data-detail-form]').addEventListener('submit', saveLead);
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !one('[data-detail]').hidden) closeDetail();
+      });
+    }
+
+    async function requestLink(event) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const email = form.elements.email.value.trim();
+      const message = one('[data-login-message]');
+      if (!form.reportValidity()) return;
+      setButtonBusy(form.querySelector('button'), true, 'Sending…');
+      message.textContent = '';
+      try {
+        const result = await server('requestMagicLink', email);
+        message.textContent = result.message || 'Check your email for a sign-in link.';
+        form.elements.email.value = '';
+      } catch (error) {
+        message.textContent = 'The request could not be completed. Please wait and try again.';
+      } finally {
+        setButtonBusy(form.querySelector('button'), false);
+      }
+    }
+
+    async function redeemMagicLink(token) {
+      loadingScreen.querySelector('p').textContent = 'Checking your secure sign-in link…';
+      try {
+        const result = await server('redeemMagicLink', token);
+        if (!result.ok) {
+          showLogin(result.error && result.error.message);
+          return false;
+        }
+        state.sessionToken = result.data.sessionToken;
+        sessionStorage.setItem(SESSION_KEY, state.sessionToken);
+        return tryBootstrap();
+      } catch (error) {
+        showLogin('This sign-in link could not be verified. Request a new one.');
+        return false;
+      }
+    }
+
+    async function tryBootstrap() {
+      try {
+        const result = await server('getAdminBootstrap', state.sessionToken);
+        if (!result.ok) return false;
+        state.user = result.data.user;
+        state.options = result.data.options;
+        enterApp(result.data);
+        return true;
+      } catch (error) {
+        return false;
+      }
+    }
+
+    function enterApp(bootstrap) {
+      loadingScreen.hidden = true;
+      loginShell.hidden = true;
+      appShell.hidden = false;
+      one('[data-user-name]').textContent = bootstrap.user.name;
+      one('[data-user-role]').textContent = bootstrap.user.roleLabel;
+      one('[data-first-name]').textContent = bootstrap.user.name.split(/\s+/)[0] || 'team';
+      one('[data-day-part]').textContent = dayPart();
+      one('[data-today]').textContent = new Intl.DateTimeFormat('en-ZA', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
+      populateOptions(bootstrap.options);
+      renderSummary(bootstrap.summary);
+      showView('overview');
+      loadAnalytics();
+    }
+
+    function showLogin(message = '') {
+      loadingScreen.hidden = true;
+      appShell.hidden = true;
+      loginShell.hidden = false;
+      if (message) one('[data-login-message]').textContent = message;
+      one('#login-email').focus();
+    }
+
+    function showView(name) {
+      all('[data-view]').forEach((view) => { view.hidden = view.dataset.view !== name; });
+      all('[data-view-button]').forEach((button) => button.classList.toggle('is-active', button.dataset.viewButton === name));
+      if (name === 'leads' && !state.leadsLoaded) loadLeads();
+    }
+
+    function populateOptions(options) {
+      fillSelect(one('[data-filter-form] [name="status"]'), options.statuses, (value) => [value, value]);
+      fillSelect(one('[data-filter-form] [name="service"]'), options.services, (value) => [value, value]);
+      fillSelect(one('[data-filter-form] [name="priority"]'), options.priorities, (value) => [value, value]);
+      fillSelect(one('[data-filter-form] [name="assignee"]'), options.assignees, (user) => [user.email, user.name]);
+      fillSelect(one('[data-detail-form] [name="status"]'), options.statuses, (value) => [value, value], true);
+      fillSelect(one('[data-detail-form] [name="service"]'), options.services, (value) => [value, value], true);
+      fillSelect(one('[data-detail-form] [name="priority"]'), options.priorities, (value) => [value, value], true);
+      fillSelect(one('[data-detail-form] [name="assignedTo"]'), options.assignees, (user) => [user.email, user.name]);
+    }
+
+    function fillSelect(select, items, mapper, clear = false) {
+      const retained = clear ? [] : Array.from(select.options).slice(0, 1).map((option) => ({ value: option.value, label: option.textContent }));
+      select.replaceChildren();
+      retained.forEach((item) => select.append(new Option(item.label, item.value)));
+      items.forEach((item) => {
+        const [value, label] = mapper(item);
+        select.append(new Option(label, value));
+      });
+    }
+
+    function renderSummary(summary) {
+      ['new', 'active', 'needsFollowUp', 'won'].forEach((key) => {
+        one(`[data-metric="${key}"]`).textContent = formatNumber(summary[key] || 0);
+      });
+      one('[data-new-count]').textContent = formatNumber(summary.new || 0);
+    }
+
+    async function loadLeads() {
+      const tbody = one('[data-lead-rows]');
+      tbody.innerHTML = '<tr><td colspan="7">Loading enquiries…</td></tr>';
+      try {
+        const result = await server('getAdminLeads', state.sessionToken, state.filters);
+        const data = unwrap(result);
+        state.leadPage = data;
+        state.leadsLoaded = true;
+        renderLeads(data);
+      } catch (error) {
+        handleRequestError(error, 'Enquiries could not be loaded.');
+        tbody.innerHTML = '<tr><td colspan="7">Enquiries could not be loaded.</td></tr>';
+      }
+    }
+
+    function renderLeads(data) {
+      const tbody = one('[data-lead-rows]');
+      const empty = one('[data-lead-empty]');
+      one('[data-lead-total]').textContent = formatNumber(data.total);
+      tbody.innerHTML = data.rows.map((lead) => `
+        <tr>
+          <td>${esc(shortDateTime(lead.receivedAt))}</td>
+          <td><div class="contact-cell"><strong>${esc(lead.name)}</strong><span>${esc(lead.company || lead.email)}</span></div></td>
+          <td>${esc(lead.service)}</td>
+          <td><span class="status-pill" data-status="${esc(lead.status)}">${esc(lead.status)}</span>${lead.priority && lead.priority !== 'Normal' ? ` <span class="priority-pill" data-priority="${esc(lead.priority)}">${esc(lead.priority)}</span>` : ''}</td>
+          <td>${esc(assigneeName(lead.assignedTo))}</td>
+          <td>${esc(lead.nextActionAt ? shortDate(lead.nextActionAt) : '—')}</td>
+          <td><button class="lead-open" type="button" data-open-lead="${esc(lead.leadId)}">Open</button></td>
+        </tr>`).join('');
+      empty.hidden = data.rows.length > 0;
+      one('[data-page-summary]').textContent = data.total ? `Page ${data.page} of ${data.pages} · ${formatNumber(data.total)} records` : 'No records';
+      one('[data-page-prev]').disabled = data.page <= 1;
+      one('[data-page-next]').disabled = !data.pages || data.page >= data.pages;
+    }
+
+    function applyFilters(event) {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      state.filters = {
+        page: 1,
+        pageSize: 50,
+        search: String(data.get('search') || '').trim(),
+        status: String(data.get('status') || ''),
+        service: String(data.get('service') || ''),
+        assignee: String(data.get('assignee') || ''),
+        priority: String(data.get('priority') || '')
+      };
+      loadLeads();
+    }
+
+    function changePage(direction) {
+      if (!state.leadPage) return;
+      const target = state.leadPage.page + direction;
+      if (target < 1 || target > state.leadPage.pages) return;
+      state.filters.page = target;
+      loadLeads();
+    }
+
+    async function openLead(leadId) {
+      const panel = one('[data-detail]');
+      panel.hidden = false;
+      document.body.style.overflow = 'hidden';
+      one('[data-detail-title]').textContent = 'Loading enquiry…';
+      one('[data-detail-form]').hidden = true;
+      try {
+        const result = await server('getAdminLead', state.sessionToken, leadId);
+        const lead = unwrap(result);
+        populateLeadForm(lead);
+        one('[data-detail-form]').hidden = false;
+      } catch (error) {
+        closeDetail();
+        handleRequestError(error, 'The enquiry could not be opened.');
+      }
+    }
+
+    function populateLeadForm(lead) {
+      const form = one('[data-detail-form]');
+      const set = (name, value) => { form.elements[name].value = value == null ? '' : value; };
+      one('[data-detail-reference]').textContent = lead.leadId;
+      one('[data-detail-title]').textContent = lead.name || 'Enquiry';
+      ['leadId', 'revision', 'status', 'priority', 'assignedTo', 'name', 'company', 'email', 'phone', 'service', 'message', 'notes']
+        .forEach((field) => set(field, lead[field]));
+      set('nextActionAt', lead.nextActionAt ? lead.nextActionAt.slice(0, 10) : '');
+      setContext('receivedAt', shortDateTime(lead.receivedAt));
+      setContext('emailStatus', lead.emailStatus || 'Not recorded');
+      setContext('landingPage', lead.landingPage || '/');
+      setContext('sourceMedium', [lead.utmSource || 'Direct', lead.utmMedium || 'none'].join(' / '));
+      setContext('updatedAt', lead.updatedAt ? shortDateTime(lead.updatedAt) : 'Not edited');
+      setContext('lastUpdatedBy', lead.lastUpdatedBy || '—');
+      one('[data-save-message]').textContent = '';
+    }
+
+    async function saveLead(event) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!form.reportValidity()) return;
+      const button = form.querySelector('[type="submit"]');
+      const message = one('[data-save-message]');
+      const patch = {};
+      ['status', 'priority', 'assignedTo', 'nextActionAt', 'name', 'company', 'email', 'phone', 'service', 'message', 'notes']
+        .forEach((field) => { patch[field] = form.elements[field].value; });
+      setButtonBusy(button, true, 'Saving…');
+      message.textContent = '';
+      try {
+        const result = await server('saveAdminLead', state.sessionToken, form.elements.leadId.value, patch, Number(form.elements.revision.value));
+        const lead = unwrap(result);
+        populateLeadForm(lead);
+        message.textContent = 'Saved and recorded in the audit trail.';
+        state.leadsLoaded = false;
+        await refreshSummary();
+        await loadLeads();
+        toast('Enquiry updated.');
+      } catch (error) {
+        handleRequestError(error, 'The enquiry could not be saved.');
+        message.textContent = error.message || 'The enquiry could not be saved.';
+      } finally {
+        setButtonBusy(button, false);
+      }
+    }
+
+    async function refreshSummary() {
+      try {
+        const result = await server('getAdminBootstrap', state.sessionToken);
+        const data = unwrap(result);
+        renderSummary(data.summary);
+      } catch (error) {
+        handleRequestError(error, 'The summary could not be refreshed.');
+      }
+    }
+
+    function closeDetail() {
+      one('[data-detail]').hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    async function loadAnalytics(force = false) {
+      if (state.analyticsLoaded && !force) return;
+      const status = one('[data-analytics-status]');
+      const content = one('[data-analytics-content]');
+      status.hidden = false;
+      status.textContent = 'Loading website data…';
+      content.hidden = true;
+      try {
+        const range = Number(one('[data-analytics-range]').value);
+        const result = await server('getAdminAnalytics', state.sessionToken, range);
+        const data = unwrap(result);
+        if (!data.available) {
+          status.textContent = data.message;
+          return;
+        }
+        renderAnalytics(data);
+        state.analyticsLoaded = true;
+        status.hidden = true;
+        content.hidden = false;
+      } catch (error) {
+        handleRequestError(error, 'Website analytics could not be loaded.');
+        status.textContent = error.message || 'Website analytics could not be loaded.';
+      }
+    }
+
+    function renderAnalytics(data) {
+      Object.keys(data.summary).forEach((key) => {
+        const target = one(`[data-ga-metric="${key}"]`);
+        if (target) target.textContent = formatNumber(data.summary[key]);
+      });
+      renderLineChart(data.trend || []);
+      one('[data-channel-list]').innerHTML = (data.channels || []).map((item) => `<li><span>${esc(item.channel)}</span><strong>${formatNumber(item.sessions)}</strong></li>`).join('') || '<li><span>No channel data yet</span><strong>0</strong></li>';
+      one('[data-page-rows]').innerHTML = (data.pages || []).map((item) => `<tr><td><strong>${esc(item.title)}</strong><br><small>${esc(item.path)}</small></td><td>${formatNumber(item.pageViews)}</td><td>${formatNumber(item.users)}</td></tr>`).join('') || '<tr><td colspan="3">No page data yet.</td></tr>';
+      const labels = {
+        generate_lead: 'Enquiry completed', lead_form_start: 'Form started', lead_form_submit_attempt: 'Form submitted',
+        lead_form_error: 'Form error', lead_duplicate_suppressed: 'Duplicate prevented', contact_click: 'Contact link clicked',
+        cta_click: 'Quote CTA clicked', service_select: 'Service selected', pipe_story_open: 'Pipework guide opened'
+      };
+      const meaningful = (data.events || []).filter((item) => labels[item.name]);
+      one('[data-event-rows]').innerHTML = meaningful.map((item) => `<tr><td>${esc(labels[item.name])}<br><small>${esc(item.name)}</small></td><td>${formatNumber(item.count)}</td><td>${formatNumber(item.keyEvents)}</td></tr>`).join('') || '<tr><td colspan="3">No tracked business events in this period.</td></tr>';
+    }
+
+    function renderLineChart(points) {
+      const container = one('[data-line-chart]');
+      if (!points.length) {
+        container.textContent = 'No daily data is available for this period.';
+        return;
+      }
+      const width = 760;
+      const height = 240;
+      const pad = { top: 18, right: 18, bottom: 34, left: 34 };
+      const max = Math.max(1, ...points.flatMap((point) => [point.users, point.pageViews]));
+      const x = (index) => pad.left + (points.length === 1 ? 0 : index * (width - pad.left - pad.right) / (points.length - 1));
+      const y = (value) => height - pad.bottom - (value / max) * (height - pad.top - pad.bottom);
+      const polyline = (key) => points.map((point, index) => `${x(index).toFixed(1)},${y(point[key]).toFixed(1)}`).join(' ');
+      const guideValues = [0, .5, 1];
+      const guides = guideValues.map((ratio) => {
+        const lineY = y(max * ratio);
+        return `<line x1="${pad.left}" y1="${lineY}" x2="${width - pad.right}" y2="${lineY}" stroke="#e6e2da"/><text x="0" y="${lineY + 4}" fill="#777" font-size="11">${Math.round(max * ratio)}</text>`;
+      }).join('');
+      const first = formatGaDate(points[0].date);
+      const last = formatGaDate(points[points.length - 1].date);
+      container.innerHTML = `<svg viewBox="0 0 ${width} ${height}" aria-hidden="true">${guides}<polyline fill="none" stroke="#7352a3" stroke-width="3" points="${polyline('users')}"/><polyline fill="none" stroke="#f58220" stroke-width="3" points="${polyline('pageViews')}"/><text x="${pad.left}" y="${height - 7}" fill="#777" font-size="11">${esc(first)}</text><text x="${width - pad.right}" y="${height - 7}" fill="#777" font-size="11" text-anchor="end">${esc(last)}</text></svg>`;
+    }
+
+    async function signOut() {
+      const token = state.sessionToken;
+      clearSession();
+      try { await server('signOutAdmin', token); } catch (error) { /* local sign-out still succeeds */ }
+      appShell.hidden = true;
+      showLogin('You have signed out.');
+    }
+
+    function clearSession() {
+      state.sessionToken = '';
+      state.user = null;
+      sessionStorage.removeItem(SESSION_KEY);
+    }
+
+    function unwrap(result) {
+      if (result && result.ok) return result.data;
+      const error = new Error(result && result.error ? result.error.message : 'The request could not be completed.');
+      error.code = result && result.error ? result.error.code : 'request_failed';
+      throw error;
+    }
+
+    function handleRequestError(error, fallback) {
+      if (error && error.code === 'session_required') {
+        clearSession();
+        showLogin('Your session expired. Request a new sign-in link.');
+        return;
+      }
+      toast(error && error.message ? error.message : fallback);
+    }
+
+    function server(method, ...args) {
+      return new Promise((resolve, reject) => {
+        const runner = google.script.run
+          .withSuccessHandler(resolve)
+          .withFailureHandler((error) => reject(new Error(error && error.message ? error.message : 'Server request failed.')));
+        runner[method](...args);
+      });
+    }
+
+    function setButtonBusy(button, busy, busyText = '') {
+      if (!button.dataset.label) button.dataset.label = button.textContent;
+      button.disabled = busy;
+      button.textContent = busy ? busyText : button.dataset.label;
+    }
+
+    function setContext(name, value) {
+      one(`[data-context="${name}"]`).textContent = value || '—';
+    }
+
+    function assigneeName(email) {
+      if (!email || !state.options) return 'Unassigned';
+      const user = state.options.assignees.find((candidate) => candidate.email === email);
+      return user ? user.name : email;
+    }
+
+    function dayPart() {
+      const hour = new Date().getHours();
+      if (hour < 12) return 'morning';
+      if (hour < 18) return 'afternoon';
+      return 'evening';
+    }
+
+    function shortDateTime(value) {
+      if (!value) return '—';
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat('en-ZA', { dateStyle: 'medium', timeStyle: 'short' }).format(date);
+    }
+
+    function shortDate(value) {
+      if (!value) return '—';
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' }).format(date);
+    }
+
+    function formatGaDate(value) {
+      if (!/^\d{8}$/.test(value || '')) return value || '';
+      return `${value.slice(6, 8)} ${new Intl.DateTimeFormat('en-ZA', { month: 'short' }).format(new Date(`${value.slice(0, 4)}-${value.slice(4, 6)}-01T12:00:00`))}`;
+    }
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat('en-ZA', { maximumFractionDigits: 0 }).format(Number(value || 0));
+    }
+
+    function esc(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
+    }
+
+    let toastTimer;
+    function toast(message) {
+      const element = one('[data-toast]');
+      window.clearTimeout(toastTimer);
+      element.textContent = message;
+      element.hidden = false;
+      toastTimer = window.setTimeout(() => { element.hidden = true; }, 4200);
+    }
+  })();
+</script>

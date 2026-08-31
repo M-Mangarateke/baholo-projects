@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#111111">
+  <?!= include_('Styles'); ?>
+</head>
+<body>
+  <div class="loading-screen" data-loading-screen>
+    <div class="brand-mark" aria-hidden="true">B</div>
+    <p>Opening Baholo Operations…</p>
+  </div>
+
+  <main class="login-shell" data-login hidden>
+    <section class="login-panel" aria-labelledby="login-title">
+      <a class="login-brand" href="https://www.baholoprojects.co.za/" target="_blank" rel="noopener">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>Baholo</strong><small>Operations</small></span>
+      </a>
+      <div class="login-copy">
+        <p class="eyebrow">Secure staff access</p>
+        <h1 id="login-title">Enquiries and website performance in one place.</h1>
+        <p>Use your authorised Baholo email address. We will send a one-time link—there is no password to remember.</p>
+      </div>
+      <form class="login-form" data-login-form novalidate>
+        <label for="login-email">Work email address</label>
+        <div class="field-row">
+          <input id="login-email" name="email" type="email" autocomplete="email" required placeholder="name@baholoprojects.co.za">
+          <button type="submit">Email sign-in link</button>
+        </div>
+        <p class="form-message" data-login-message aria-live="polite"></p>
+      </form>
+      <p class="login-note">Links expire after 15 minutes and can be used once. Unrecognised addresses receive no account information.</p>
+    </section>
+    <aside class="login-context" aria-label="Portal capabilities">
+      <p class="context-index">01—03</p>
+      <div>
+        <p class="eyebrow">Built for daily follow-through</p>
+        <ul>
+          <li><strong>Enquiries</strong><span>Search, filter, assign and update every website lead.</span></li>
+          <li><strong>Accountability</strong><span>Every saved change is recorded in a private audit trail.</span></li>
+          <li><strong>Performance</strong><span>Read the consented GA4 website signals without leaving the workspace.</span></li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <div class="app-shell" data-app hidden>
+    <header class="app-header">
+      <div class="app-brand">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>Baholo</strong><small>Operations</small></span>
+      </div>
+      <nav class="app-nav" aria-label="Workspace">
+        <button class="is-active" type="button" data-view-button="overview">Overview</button>
+        <button type="button" data-view-button="leads">Enquiries <span data-new-count>0</span></button>
+      </nav>
+      <div class="user-menu">
+        <div><strong data-user-name></strong><small data-user-role></small></div>
+        <button type="button" data-sign-out>Sign out</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="workspace-view" data-view="overview">
+        <header class="view-heading">
+          <div>
+            <p class="eyebrow">Operational picture</p>
+            <h1>Good <span data-day-part>day</span>, <span data-first-name>team</span>.</h1>
+          </div>
+          <p data-today></p>
+        </header>
+
+        <section class="metric-grid" aria-label="Enquiry summary">
+          <article class="metric-card metric-card--primary"><span>New enquiries</span><strong data-metric="new">0</strong><small>Awaiting first action</small></article>
+          <article class="metric-card"><span>Active pipeline</span><strong data-metric="active">0</strong><small>New through quoted</small></article>
+          <article class="metric-card"><span>Needs follow-up</span><strong data-metric="needsFollowUp">0</strong><small>Next action is due</small></article>
+          <article class="metric-card"><span>Won</span><strong data-metric="won">0</strong><small>Recorded outcomes</small></article>
+        </section>
+
+        <section class="analytics-section" aria-labelledby="analytics-title">
+          <header class="section-heading">
+            <div><p class="eyebrow">Consented GA4 data</p><h2 id="analytics-title">Website performance</h2></div>
+            <label>Reporting period
+              <select data-analytics-range>
+                <option value="7">Last 7 days</option>
+                <option value="28" selected>Last 28 days</option>
+                <option value="90">Last 90 days</option>
+              </select>
+            </label>
+          </header>
+          <div class="analytics-status" data-analytics-status>Loading website data…</div>
+          <div data-analytics-content hidden>
+            <div class="analytics-metrics">
+              <div><span>Active users</span><strong data-ga-metric="activeUsers">0</strong></div>
+              <div><span>Sessions</span><strong data-ga-metric="sessions">0</strong></div>
+              <div><span>Page views</span><strong data-ga-metric="pageViews">0</strong></div>
+              <div><span>Key events</span><strong data-ga-metric="keyEvents">0</strong></div>
+            </div>
+            <div class="analytics-layout">
+              <article class="chart-card">
+                <header><div><h3>Traffic trend</h3><p>Daily active users and page views</p></div><div class="legend"><span class="legend-users">Users</span><span class="legend-views">Views</span></div></header>
+                <div class="line-chart" data-line-chart role="img" aria-label="Daily website users and page views"></div>
+              </article>
+              <article class="rank-card">
+                <header><h3>Acquisition</h3><p>Sessions by channel</p></header>
+                <ol data-channel-list></ol>
+              </article>
+            </div>
+            <div class="data-table-grid">
+              <article class="compact-table-card">
+                <header><h3>Top pages</h3><p>Pages visitors viewed most</p></header>
+                <div class="compact-table"><table><thead><tr><th>Page</th><th>Views</th><th>Users</th></tr></thead><tbody data-page-rows></tbody></table></div>
+              </article>
+              <article class="compact-table-card">
+                <header><h3>Meaningful events</h3><p>Interaction and conversion signals</p></header>
+                <div class="compact-table"><table><thead><tr><th>Event</th><th>Count</th><th>Key</th></tr></thead><tbody data-event-rows></tbody></table></div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="workspace-view" data-view="leads" hidden>
+        <header class="view-heading leads-heading">
+          <div><p class="eyebrow">Website enquiries</p><h1>Enquiry workspace</h1></div>
+          <p><strong data-lead-total>0</strong> matching records</p>
+        </header>
+
+        <form class="filter-bar" data-filter-form>
+          <label class="search-field"><span>Search</span><input name="search" type="search" placeholder="Reference, name, company or email"></label>
+          <label><span>Status</span><select name="status"><option value="">All statuses</option></select></label>
+          <label><span>Service</span><select name="service"><option value="">All services</option></select></label>
+          <label><span>Assignee</span><select name="assignee"><option value="">All assignees</option></select></label>
+          <label><span>Priority</span><select name="priority"><option value="">All priorities</option></select></label>
+          <button type="submit">Apply filters</button>
+          <button class="button-quiet" type="reset">Reset</button>
+        </form>
+
+        <section class="lead-table-card" aria-live="polite">
+          <div class="lead-table-scroll">
+            <table class="lead-table">
+              <thead><tr><th>Received</th><th>Contact</th><th>Service</th><th>Status</th><th>Owner</th><th>Next action</th><th></th></tr></thead>
+              <tbody data-lead-rows></tbody>
+            </table>
+          </div>
+          <div class="empty-state" data-lead-empty hidden><strong>No enquiries match these filters.</strong><span>Reset the filters or try a broader search.</span></div>
+          <footer class="pagination"><p data-page-summary></p><div><button type="button" data-page-prev>Previous</button><button type="button" data-page-next>Next</button></div></footer>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <aside class="detail-panel" data-detail hidden aria-labelledby="detail-title">
+    <div class="detail-backdrop" data-detail-close></div>
+    <section class="detail-sheet">
+      <header class="detail-header">
+        <div><p class="eyebrow" data-detail-reference></p><h2 id="detail-title" data-detail-title>Enquiry</h2></div>
+        <button type="button" data-detail-close aria-label="Close enquiry">Close</button>
+      </header>
+      <form class="detail-form" data-detail-form>
+        <input type="hidden" name="leadId"><input type="hidden" name="revision">
+        <div class="detail-grid detail-grid--three">
+          <label>Status<select name="status" required></select></label>
+          <label>Priority<select name="priority" required></select></label>
+          <label>Assigned to<select name="assignedTo"><option value="">Unassigned</option></select></label>
+        </div>
+        <label>Next action date<input name="nextActionAt" type="date"></label>
+        <hr>
+        <div class="detail-grid">
+          <label>Contact name<input name="name" maxlength="100" required></label>
+          <label>Company<input name="company" maxlength="120"></label>
+          <label>Email<input name="email" type="email" maxlength="254" required></label>
+          <label>Phone<input name="phone" maxlength="50"></label>
+        </div>
+        <label>Service<select name="service" required></select></label>
+        <label>Enquiry message<textarea name="message" rows="6" maxlength="4000" required></textarea></label>
+        <label>Internal notes<textarea name="notes" rows="5" maxlength="4000" placeholder="Add follow-up context. Notes are never emailed to the visitor."></textarea></label>
+        <section class="record-context" aria-labelledby="record-context-title">
+          <h3 id="record-context-title">Submission record</h3>
+          <dl>
+            <div><dt>Received</dt><dd data-context="receivedAt"></dd></div>
+            <div><dt>Email delivery</dt><dd data-context="emailStatus"></dd></div>
+            <div><dt>Landing page</dt><dd data-context="landingPage"></dd></div>
+            <div><dt>Source / medium</dt><dd data-context="sourceMedium"></dd></div>
+            <div><dt>Last updated</dt><dd data-context="updatedAt"></dd></div>
+            <div><dt>Updated by</dt><dd data-context="lastUpdatedBy"></dd></div>
+          </dl>
+        </section>
+        <div class="detail-actions"><p data-save-message aria-live="polite"></p><button type="submit">Save changes</button></div>
+      </form>
+    </section>
+  </aside>
+
+  <div class="toast" data-toast hidden role="status"></div>
+
+  <script>
+    window.BAHOLO_ADMIN_BOOT = Object.freeze({
+      magicToken: '<?= magicToken ?>',
+      serviceUrl: '<?= serviceUrl ?>'
+    });
+  </script>
+  <?!= include_('App'); ?>
+</body>
+</html>

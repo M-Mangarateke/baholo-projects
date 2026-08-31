@@ -31,6 +31,13 @@ is confirmed.
 - reduced-motion and constrained-network media handling;
 - dependency-free website, eliminating package-runtime vulnerability exposure.
 
+The staff portal adds one-time, hashed magic links; hashed, expiring and
+revocable sessions; a private user allowlist; server-side permission checks on
+every data method; revision-checked lead edits; no lead-delete method;
+field-level before/after audit records; and read-only GA4 scope. The portal is
+`noindex` and loads no third-party browser scripts. Its production workbook ID,
+user seed and owner identity remain private Script Properties.
+
 ## Known platform boundaries
 
 GitHub Pages does not provide repository-controlled response headers such as a
@@ -43,6 +50,12 @@ static site behind a host/CDN that supports reviewed response headers.
 The Apps Script `/exec` URL is public by design. Security comes from strict
 validation, abuse controls and owner-only data access—not from treating the URL
 as a password.
+
+The admin `/exec` URL is also reachable before login so email magic links can
+open it. Reachability is not authorisation: anonymous methods can only request
+or redeem bounded tokens, and every lead/Analytics method validates the active
+user and permission server-side. Because the admin app executes as its owner,
+never return `ScriptApp.getOAuthToken()` or another Google credential to HTML.
 
 ## Account and permission rules
 

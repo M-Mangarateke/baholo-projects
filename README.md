@@ -33,6 +33,11 @@ Then open `http://127.0.0.1:4173`.
   [`docs/GOOGLE-BUSINESS-PROFILE.md`](docs/GOOGLE-BUSINESS-PROFILE.md).
 - Form processing, the private Sheet and notification workflow are documented
   in [`docs/FORMS-DATA-FLOW.md`](docs/FORMS-DATA-FLOW.md).
+- The magic-link staff portal, roles and Analytics dashboard are documented in
+  [`docs/ADMIN-PORTAL.md`](docs/ADMIN-PORTAL.md); deployment source is in
+  [`apps-script-admin/`](apps-script-admin/).
+- The complete notification and event-channel model is documented in
+  [`docs/NOTIFICATIONS-EVENTS.md`](docs/NOTIFICATIONS-EVENTS.md).
 - Public configuration is documented in
   [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md); security decisions in
   [`docs/SECURITY.md`](docs/SECURITY.md).
@@ -41,6 +46,8 @@ Then open `http://127.0.0.1:4173`.
   [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md).
 - The evidence-backed release status and remaining external validation gates
   are in [`docs/QA-REPORT-2026-08-30.md`](docs/QA-REPORT-2026-08-30.md).
+- Admin-portal implementation and local browser evidence are in
+  [`docs/QA-REPORT-2026-08-31-ADMIN.md`](docs/QA-REPORT-2026-08-31-ADMIN.md).
 - The authoritative service register is
   [`docs/EXTERNAL-SERVICES.md`](docs/EXTERNAL-SERVICES.md).
 
@@ -58,6 +65,9 @@ Then open `http://127.0.0.1:4173`.
   duplicate suppression were verified on 30 August 2026.
 - The Apps Script project and private Sheet should be owned by the Baholo
   administration account. Record access and recovery contacts privately.
+- The separate admin project reads the same private workbook, uses a private
+  user allowlist and reads GA4 through the deploying owner's read-only scope.
+  Never place its production user list or workbook ID in Git.
 - Do not expose Google credentials or the Google Sheet itself in browser code.
 - Keep WhatsApp as click tracking only unless a future API integration is approved.
 - The public privacy notice is `privacy.html` and the website terms are
@@ -67,3 +77,11 @@ Then open `http://127.0.0.1:4173`.
 - Update the canonical URL only if the final production domain changes from `www.baholoprojects.co.za`.
 - The requested news section is deferred until Baholo assigns an editorial owner and approves a sourcing, attribution and storage workflow.
 - Baholo has approved the statement that the company has worked with Heineken. The website uses `assets/heineken-logo-transparent.png`, which preserves the red star and white lettering while removing the supplied green panel and outer canvas.
+
+## Repository checks
+
+```powershell
+node --check script.js
+node tests\admin-portal.test.js
+git diff --check
+```

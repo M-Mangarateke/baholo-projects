@@ -37,6 +37,24 @@ Analytics intentionally remains off until consent and does not load on local or
 preview hosts. Test on the canonical production domain, allow analytics, confirm
 one Google tag, then check GA4 Realtime. Never send PII in a diagnostic event.
 
+If Analytics is visible in GA4 but missing only from Baholo Operations, confirm
+the Google Analytics Data API is enabled for the admin Apps Script Cloud
+project, `GA4_PROPERTY_ID` is correct, and the deploying owner has property
+access. A dashboard API failure must not block lead work.
+
+## Staff sign-in link does not arrive
+
+Confirm the address is active in the private `Admin Users` sheet, then inspect
+Apps Script Executions and Mail quota. Unknown and known addresses deliberately
+receive the same browser response. Do not weaken this account-enumeration
+protection or send a link manually through an unapproved channel.
+
+## Enquiry edit says it changed
+
+Another authorised user saved a newer revision. Close and reopen the enquiry,
+review the latest values and apply the intended change again. Do not bypass the
+revision check or edit `Revision` directly.
+
 ## Business Profile is not public
 
 The draft requires Google verification. Enter the real private operating/mailing

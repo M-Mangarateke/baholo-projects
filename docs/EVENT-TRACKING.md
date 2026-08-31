@@ -37,6 +37,11 @@ funnel successes. A new lead is counted at the backend acknowledgement boundary
 rather than on a button click. The Sheet/reference ID is the operational source
 of truth; GA4 is the aggregate marketing measurement layer.
 
+Baholo Operations does not load GA4. Staff authentication, reads and edits are
+recorded only in the private `Admin Audit` channel so internal activity cannot
+inflate public traffic or conversion reporting. See
+[`NOTIFICATIONS-EVENTS.md`](NOTIFICATIONS-EVENTS.md).
+
 ## Change control
 
 - Use lowercase snake_case event names.

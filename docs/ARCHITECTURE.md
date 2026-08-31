@@ -14,6 +14,13 @@ Visitor browser
        ├─ administrator notification email
        ├─ visitor acknowledgement email
        └─ postMessage result to the canonical website origin
+
+Authorised staff browser
+  └─ Separate Baholo Operations Apps Script web app
+       ├─ one-time magic-link authentication and private role allowlist
+       ├─ filtered/editable lead workflow with revision checks
+       ├─ field-level Admin Audit and assignment notifications
+       └─ read-only GA4 Data API dashboard
 ```
 
 GoDaddy is the DNS authority. GitHub Pages provides hosting, redirects and TLS.
@@ -31,6 +38,7 @@ they do not provide website hosting.
 | `script.js` | Navigation, progressive media, consent, analytics events and form client logic |
 | `site-config.js` | Public integration identifiers and content-version values |
 | `apps-script/` | Reviewed source and manifest for the private lead web app |
+| `apps-script-admin/` | Separate staff portal, magic-link auth, lead operations and GA4 reporting |
 | `assets/` | Logos, icons, social card, images and hero video |
 | `.github/workflows/` | GitHub Pages deployment workflow |
 | `docs/` | Operational and recovery handover |
@@ -53,6 +61,7 @@ Before committing:
 ```powershell
 node --check script.js
 Get-Content -LiteralPath apps-script\Code.gs -Raw | node --check -
+node tests\admin-portal.test.js
 git diff --check
 ```
 

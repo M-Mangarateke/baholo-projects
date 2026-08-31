@@ -5,6 +5,8 @@
 - Search Console indexing, sitemap, canonical, 404 and enhancement reports.
 - GA4 Realtime and event quality; investigate duplicate or missing lead events.
 - Apps Script executions, `System Log`, mail status and obvious spam patterns.
+- Baholo Operations unassigned/due leads, failed assignment notices and
+  unexpected authentication/audit activity after the portal is deployed.
 - Public homepage, form fallbacks, navigation, privacy/terms links and HTTPS.
 - Business Profile verification/edit status without creating duplicates.
 
@@ -12,6 +14,8 @@
 
 - Test one authorised, labelled enquiry end to end.
 - Review Sheet access, lead statuses, retention candidates and mail failures.
+- Review active portal users, stale sessions, Admin Audit anomalies and GA4
+  dashboard availability.
 - Review search queries and landing pages; improve visible factual content
   rather than adding speculative keywords or schema.
 - Check authentic photo/service/hours accuracy on the Business Profile.
