@@ -67,7 +67,9 @@ immediate visual update. Recrawling and reprocessing can take days or weeks.
 6. Confirm that the live page is reachable, indexable, uses HTTPS, and declares
    the production `www` URL as canonical.
 7. Request indexing only for public pages that should appear in search. Do not
-   request indexing for redirect URLs, duplicate variants, or internal pages.
+   routinely request redirect URLs, duplicate variants, or internal pages. A
+   one-time apex request is acceptable during a verified migration when Google
+   still holds a historical page for that exact URL.
 8. Inspect `https://www.baholoprojects.co.za/privacy.html` and
    `https://www.baholoprojects.co.za/terms.html` after the homepage.
 
@@ -104,6 +106,20 @@ The source now prioritises stable 48×48 and 192×192 Baholo PNG icons—both va
 multiples of 48—before smaller/browser fallbacks. Favicon display remains a
 separate Google recrawl/reprocessing observation, not a reason to submit
 repeated indexing requests.
+
+On 31 August, a personalized result temporarily resurfaced the historical
+GoDaddy/Airo apex title and snippet. Direct production checks still showed an
+HTTP 301 from the apex to the HTTPS `www` canonical, and the canonical page,
+robots file, sitemap and Baholo icon assets all returned successfully. A
+non-personalized Google search showed the correct Baholo title, canonical URL
+and industrial-services description, with Google's generic fallback icon.
+
+Search Console showed that Google's stored apex record had last been crawled on
+27 August 2026 at 19:43, while the canonical homepage had last been crawled on
+30 August 2026 at 13:56. One fresh crawl was requested for each URL on 31
+August and Google accepted both into its priority crawl queue. This is evidence
+of submission only; it is not a claim that the title, snippet or favicon has
+already been reprocessed.
 
 ## Monitoring checklist
 

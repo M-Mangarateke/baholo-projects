@@ -46,17 +46,18 @@ aggregate sample metrics; no real lead data was used. Playwright CLI verified:
 
 ## External validation gate
 
-The Apps Script project has been created in the signed-in owner account and the
-reviewed source/manifest have been entered. Production completion still needs:
+The Apps Script project has been created in the signed-in owner account. The
+reviewed source and signed-in-only manifest have been entered, the accidental
+blank HTML file has been removed, and the private workbook, GA4 property and
+three-user allowlist have been stored as Script Properties. Production
+completion still needs:
 
-1. removal of one accidental blank HTML file from the cloud project;
-2. private Script Properties for the existing workbook and three approved
-   users;
-3. `setupAdmin_()` authorisation and private workbook initialisation;
-4. Google Analytics Data API availability for the project;
-5. a versioned web-app deployment executing as the owner and requiring Google
+1. completion of the owner-reviewed Google authorization warning, followed by
+   private workbook initialisation;
+2. Google Analytics Data API availability for the project;
+3. a versioned web-app deployment executing as the owner and requiring Google
    sign-in before the hidden login page can load;
-6. live tests for unknown-user behaviour, one-time redemption, lead read/edit,
+4. live tests for unknown-user behaviour, one-time redemption, lead read/edit,
    audit rows, assignment email, GA4 reports and sign-out.
 
 These are not marked complete until the live evidence exists.

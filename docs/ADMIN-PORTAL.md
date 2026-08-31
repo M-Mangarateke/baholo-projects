@@ -69,7 +69,8 @@ suppression differ. The private Sheet remains the operational source of truth.
 
 Repository implementation is complete in `apps-script-admin/`. Creating the
 Apps Script project, enabling the GA4 Data API, authorising scopes, setting
-private properties and creating a public web-app deployment are external
-account changes. They must be performed in the approved owner account and then
-validated with all three authorised users. Exact steps and checks are in
+private properties and creating the unlisted, signed-in-only web-app deployment
+are external account changes. They must be performed in the approved owner
+account and then validated with all three authorised users. Exact steps and
+checks are in
 [`apps-script-admin/README.md`](../apps-script-admin/README.md).
