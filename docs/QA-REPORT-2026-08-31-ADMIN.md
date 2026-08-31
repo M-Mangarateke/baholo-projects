@@ -2,10 +2,10 @@
 
 ## Scope
 
-This report covers the repository implementation and local browser verification
-of the staff portal plus the `Baholo` short-name entity update. It does not
-claim that the portal's external Google deployment or three-user magic-link
-delivery has been completed.
+This report covers the repository implementation, local browser verification
+and live owner-account deployment of the staff portal plus the `Baholo`
+short-name entity update. Staff-recipient email delivery is not claimed until
+each staff member completes a live test.
 
 ## Verified repository checks
 
@@ -24,12 +24,14 @@ delivery has been completed.
 A local preview adapter supplied fictional `.example.test` records and
 aggregate sample metrics; no real lead data was used. Playwright CLI verified:
 
-- desktop overview with enquiry counts, GA4 metric cards, traffic chart,
-  channels, top pages and meaningful events;
+- desktop overview with enquiry counts, GA4 metric cards, grouped daily traffic
+  bars, acquisition-share bars, top pages and meaningful events;
 - enquiry table, filters, status/priority indicators and pagination states;
 - detail panel, editable fields, immutable submission context and save result;
 - mobile 390 × 844 layout and horizontal table affordance;
 - sign-out and passwordless login states;
+- public-site typography, official elephant emblem, separated sign-in action
+  and branded industrial-image treatment on the staff sign-in screen;
 - zero browser console errors or warnings across the tested flows.
 
 ## Security properties reviewed
@@ -44,20 +46,17 @@ aggregate sample metrics; no real lead data was used. Playwright CLI verified:
 - The portal declares `noindex`, uses `no-referrer`, and loads no external
   browser scripts.
 
-## External validation gate
+## External validation status
 
-The Apps Script project has been created in the signed-in owner account. The
-reviewed source and signed-in-only manifest have been entered, the accidental
-blank HTML file has been removed, and the private workbook, GA4 property and
-three-user allowlist have been stored as Script Properties. Production
-completion still needs:
-
-1. completion of the owner-reviewed Google authorization warning, followed by
-   private workbook initialisation;
-2. Google Analytics Data API availability for the project;
-3. a versioned web-app deployment executing as the owner and requiring Google
-   sign-in before the hidden login page can load;
-4. live tests for unknown-user behaviour, one-time redemption, lead read/edit,
-   audit rows, assignment email, GA4 reports and sign-out.
-
-These are not marked complete until the live evidence exists.
+- Private workbook initialisation and the three-user allowlist are complete.
+- A standard Google Cloud project is linked; the Google Analytics Data API is
+  enabled and the owner reauthorised the required Sheets, Mail, external-request
+  and read-only Analytics scopes.
+- Anonymous access redirects to Google sign-in before the portal shell loads.
+- Owner magic-link redemption, enquiry reads and live consented GA4 reports are
+  verified.
+- Version 3 is deployed on the stable web-app URL and the company-domain staff
+  entry point resolves to the branded sign-in screen.
+- Staff-recipient magic-link delivery, a production assignment notification and
+  a live edit/audit-row check remain explicit acceptance tests; they are not
+  claimed complete here.

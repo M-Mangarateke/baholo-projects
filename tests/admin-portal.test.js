@@ -40,8 +40,14 @@ assert.deepEqual(publicFunctions, [
 ]);
 assert.match(serverSource, /function setupAdmin_\(/);
 assert.doesNotMatch(serverSource, /const\s+(?:SPREADSHEET_ID|OWNER_EMAIL|ADMIN_EMAIL)\s*=/);
+assert.match(serverSource, /https:\/\/www\.baholoprojects\.co\.za\/assets\/baholo-logo\.png/);
 assert.match(indexHtml, /noindex, nofollow, noarchive/);
 assert.doesNotMatch(indexHtml, /<script\s+src=/i);
+assert.equal((indexHtml.match(/assets\/baholo-emblem\.png/g) || []).length, 3);
+assert.doesNotMatch(indexHtml, /brand-mark/);
+assert.match(indexHtml, /data-traffic-chart/);
+assert.doesNotMatch(indexHtml, /data-line-chart/);
+assert.doesNotMatch(clientHtml, /<polyline/);
 assert.match(entryHtml, /noindex, nofollow, noarchive, nosnippet/);
 assert.match(entryHtml, /https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec/);
 assert.doesNotMatch(publicIndexHtml, /baholooperations/i);

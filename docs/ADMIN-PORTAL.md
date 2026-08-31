@@ -40,8 +40,12 @@ already verified public lead endpoint.
   next-action date and internal notes;
 - stale-edit protection so one user cannot silently overwrite another user's
   newer save;
-- GA4 cards, daily trend, acquisition channels, top pages and meaningful event
-  results;
+- GA4 cards, grouped daily traffic bars, acquisition-share bars, top pages and
+  meaningful event results;
+- the same Arial/Georgia, black, white and orange design language as the public
+  site, using the official Baholo elephant emblem instead of placeholder marks;
+- branded magic-link email with the Baholo Projects logo and a clear orange
+  sign-in action;
 - responsive layout suitable for office desktops and mobile follow-up.
 
 ## Data ownership and roles
@@ -70,10 +74,11 @@ suppression differ. The private Sheet remains the operational source of truth.
 
 ## Deployment boundary
 
-Repository implementation is complete in `apps-script-admin/`. Creating the
-Apps Script project, enabling the GA4 Data API, authorising scopes, setting
-private properties and creating the unlisted, signed-in-only web-app deployment
-are external account changes. They must be performed in the approved owner
-account and then validated with all three authorised users. Exact steps and
-checks are in
+Repository implementation is in `apps-script-admin/`. The production project
+uses a standard Google Cloud project with the GA4 Data API enabled, owner-held
+OAuth grants, private Script Properties and a versioned web-app deployment that
+executes as the owner and requires Google sign-in. Version 3 introduced the
+unified public-site visual system, official logo treatment, branded magic-link
+email and bar-chart Analytics presentation. Exact recovery and validation steps
+are in
 [`apps-script-admin/README.md`](../apps-script-admin/README.md).

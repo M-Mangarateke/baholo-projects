@@ -77,10 +77,9 @@ const mockBridge = `<script>
   })();
 </script>`;
 
-let html = read('Index.html')
+const htmlTemplate = read('Index.html')
   .replace("<?!= include_('Styles'); ?>", read('Styles.html'))
   .replace("<?!= include_('App'); ?>", `${mockBridge}\n${read('App.html')}`)
-  .replace("<?= magicToken ?>", 'b'.repeat(64))
   .replace("<?= serviceUrl ?>", `http://127.0.0.1:${port}/`);
 
 const server = http.createServer((request, response) => {
@@ -89,6 +88,8 @@ const server = http.createServer((request, response) => {
     response.end();
     return;
   }
+  const magicToken = request.url && request.url.startsWith('/login') ? '' : 'b'.repeat(64);
+  const html = htmlTemplate.replace("<?= magicToken ?>", magicToken);
   response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
   response.end(html);
 });

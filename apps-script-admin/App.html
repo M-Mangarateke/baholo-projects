@@ -333,8 +333,13 @@
         const target = one(`[data-ga-metric="${key}"]`);
         if (target) target.textContent = formatNumber(data.summary[key]);
       });
-      renderLineChart(data.trend || []);
-      one('[data-channel-list]').innerHTML = (data.channels || []).map((item) => `<li><span>${esc(item.channel)}</span><strong>${formatNumber(item.sessions)}</strong></li>`).join('') || '<li><span>No channel data yet</span><strong>0</strong></li>';
+      renderTrafficBars(data.trend || []);
+      const channels = data.channels || [];
+      const channelTotal = Math.max(1, channels.reduce((sum, item) => sum + Number(item.sessions || 0), 0));
+      one('[data-channel-list]').innerHTML = channels.map((item) => {
+        const share = Math.max(0, Math.min(100, (Number(item.sessions || 0) / channelTotal) * 100));
+        return `<li><div class="channel-row"><span>${esc(item.channel)}</span><strong>${formatNumber(item.sessions)} <small>${Math.round(share)}%</small></strong></div><span class="channel-track" aria-hidden="true"><i style="width:${share.toFixed(1)}%"></i></span></li>`;
+      }).join('') || '<li class="is-empty"><div class="channel-row"><span>No channel data yet</span><strong>0</strong></div></li>';
       one('[data-page-rows]').innerHTML = (data.pages || []).map((item) => `<tr><td><strong>${esc(item.title)}</strong><br><small>${esc(item.path)}</small></td><td>${formatNumber(item.pageViews)}</td><td>${formatNumber(item.users)}</td></tr>`).join('') || '<tr><td colspan="3">No page data yet.</td></tr>';
       const labels = {
         generate_lead: 'Enquiry completed', lead_form_start: 'Form started', lead_form_submit_attempt: 'Form submitted',
@@ -345,8 +350,8 @@
       one('[data-event-rows]').innerHTML = meaningful.map((item) => `<tr><td>${esc(labels[item.name])}<br><small>${esc(item.name)}</small></td><td>${formatNumber(item.count)}</td><td>${formatNumber(item.keyEvents)}</td></tr>`).join('') || '<tr><td colspan="3">No tracked business events in this period.</td></tr>';
     }
 
-    function renderLineChart(points) {
-      const container = one('[data-line-chart]');
+    function renderTrafficBars(points) {
+      const container = one('[data-traffic-chart]');
       if (!points.length) {
         container.textContent = 'No daily data is available for this period.';
         return;
@@ -355,17 +360,27 @@
       const height = 240;
       const pad = { top: 18, right: 18, bottom: 34, left: 34 };
       const max = Math.max(1, ...points.flatMap((point) => [point.users, point.pageViews]));
-      const x = (index) => pad.left + (points.length === 1 ? 0 : index * (width - pad.left - pad.right) / (points.length - 1));
-      const y = (value) => height - pad.bottom - (value / max) * (height - pad.top - pad.bottom);
-      const polyline = (key) => points.map((point, index) => `${x(index).toFixed(1)},${y(point[key]).toFixed(1)}`).join(' ');
+      const plotWidth = width - pad.left - pad.right;
+      const plotHeight = height - pad.top - pad.bottom;
+      const groupWidth = plotWidth / points.length;
+      const barWidth = Math.max(2, Math.min(10, (groupWidth - 3) / 2));
+      const baseline = height - pad.bottom;
+      const y = (value) => baseline - (Number(value || 0) / max) * plotHeight;
       const guideValues = [0, .5, 1];
       const guides = guideValues.map((ratio) => {
         const lineY = y(max * ratio);
         return `<line x1="${pad.left}" y1="${lineY}" x2="${width - pad.right}" y2="${lineY}" stroke="#e6e2da"/><text x="0" y="${lineY + 4}" fill="#777" font-size="11">${Math.round(max * ratio)}</text>`;
       }).join('');
+      const bars = points.map((point, index) => {
+        const centre = pad.left + (index * groupWidth) + (groupWidth / 2);
+        const usersY = y(point.users);
+        const viewsY = y(point.pageViews);
+        const label = esc(formatGaDate(point.date));
+        return `<rect x="${(centre - barWidth - 1).toFixed(1)}" y="${usersY.toFixed(1)}" width="${barWidth.toFixed(1)}" height="${Math.max(0, baseline - usersY).toFixed(1)}" fill="#090909"><title>${label}: ${formatNumber(point.users)} users</title></rect><rect x="${(centre + 1).toFixed(1)}" y="${viewsY.toFixed(1)}" width="${barWidth.toFixed(1)}" height="${Math.max(0, baseline - viewsY).toFixed(1)}" fill="#f58220"><title>${label}: ${formatNumber(point.pageViews)} page views</title></rect>`;
+      }).join('');
       const first = formatGaDate(points[0].date);
       const last = formatGaDate(points[points.length - 1].date);
-      container.innerHTML = `<svg viewBox="0 0 ${width} ${height}" aria-hidden="true">${guides}<polyline fill="none" stroke="#7352a3" stroke-width="3" points="${polyline('users')}"/><polyline fill="none" stroke="#f58220" stroke-width="3" points="${polyline('pageViews')}"/><text x="${pad.left}" y="${height - 7}" fill="#777" font-size="11">${esc(first)}</text><text x="${width - pad.right}" y="${height - 7}" fill="#777" font-size="11" text-anchor="end">${esc(last)}</text></svg>`;
+      container.innerHTML = `<svg viewBox="0 0 ${width} ${height}" aria-hidden="true">${guides}${bars}<text x="${pad.left}" y="${height - 7}" fill="#777" font-size="11">${esc(first)}</text><text x="${width - pad.right}" y="${height - 7}" fill="#777" font-size="11" text-anchor="end">${esc(last)}</text></svg>`;
     }
 
     async function signOut() {

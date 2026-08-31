@@ -683,12 +683,13 @@ function sendMagicEmail_(user, link, expiresAt) {
   const expires = Utilities.formatDate(expiresAt, ADMIN.TIME_ZONE, 'HH:mm z');
   const safeName = escapeHtml_(user.name);
   const safeLink = escapeHtml_(link);
+  const logoUrl = 'https://www.baholoprojects.co.za/assets/baholo-logo.png';
   MailApp.sendEmail({
     to: user.email,
     name: 'Baholo Operations',
     subject: 'Your Baholo Operations sign-in link',
     body: `Hello ${user.name},\n\nUse this one-time link to sign in to Baholo Operations:\n${link}\n\nThe link expires at ${expires} and can be used once. If you did not request it, ignore this email.\n\nBaholo Projects`,
-    htmlBody: `<div style="font-family:Arial,sans-serif;color:#181818;line-height:1.6;max-width:620px"><div style="background:#111;color:#fff;padding:24px;border-top:6px solid #f58220"><strong style="letter-spacing:.08em">BAHOLO PROJECTS</strong><h1 style="font-size:24px;margin:14px 0 0">Secure staff sign-in</h1></div><div style="padding:26px;border:1px solid #e5e5e5;border-top:0"><p>Hello ${safeName},</p><p>Use the button below to sign in to Baholo Operations. This link expires at <strong>${escapeHtml_(expires)}</strong> and can be used once.</p><p style="margin:26px 0"><a href="${safeLink}" style="background:#f58220;color:#111;text-decoration:none;font-weight:bold;padding:13px 20px;display:inline-block">Sign in to Baholo Operations</a></p><p style="font-size:13px;color:#666">If you did not request this link, ignore this email. Do not forward it.</p></div></div>`
+    htmlBody: `<div style="font-family:Arial,Helvetica,sans-serif;color:#090909;line-height:1.6;max-width:620px"><div style="background:#090909;color:#fff;padding:24px 28px;border-top:6px solid #f58220"><img src="${logoUrl}" width="112" alt="Baholo Projects" style="display:block;width:112px;height:auto;margin:0 0 18px"><strong style="font-size:12px;letter-spacing:.12em">BAHOLO OPERATIONS</strong><h1 style="font-size:28px;font-weight:300;letter-spacing:-.03em;line-height:1.1;margin:12px 0 0">Secure staff sign-in</h1></div><div style="padding:28px;border:1px solid #dedede;border-top:0;background:#fff"><p style="margin-top:0">Hello ${safeName},</p><p>Use the button below to sign in to Baholo Operations. This link expires at <strong>${escapeHtml_(expires)}</strong> and can be used once.</p><p style="margin:28px 0"><a href="${safeLink}" style="background:#f58220;color:#090909;text-decoration:none;font-size:13px;font-weight:bold;letter-spacing:.04em;text-transform:uppercase;padding:14px 20px;display:inline-block">Sign in to Baholo Operations</a></p><p style="font-size:13px;color:#6d6d6d;margin-bottom:0">If you did not request this link, ignore this email. Do not forward it.</p></div></div>`
   });
 }
 
