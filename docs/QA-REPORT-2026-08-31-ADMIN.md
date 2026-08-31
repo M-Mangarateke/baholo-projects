@@ -54,8 +54,8 @@ reviewed source/manifest have been entered. Production completion still needs:
    users;
 3. `setupAdmin_()` authorisation and private workbook initialisation;
 4. Google Analytics Data API availability for the project;
-5. a versioned web-app deployment executing as the owner with anonymous reach
-   to the login page;
+5. a versioned web-app deployment executing as the owner and requiring Google
+   sign-in before the hidden login page can load;
 6. live tests for unknown-user behaviour, one-time redemption, lead read/edit,
    audit rows, assignment email, GA4 reports and sign-out.
 

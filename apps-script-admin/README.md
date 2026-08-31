@@ -8,8 +8,9 @@ Data API. It is intentionally isolated from the public form receiver in
 
 ## Trust model
 
-- The web app is reachable anonymously so a one-time email link can open it,
-  but anonymous access does not grant data access.
+- The web app requires a signed-in Google account, is not linked from the
+  public site, and is marked `noindex`. Google sign-in alone does not grant data
+  access; the private allowlist and one-time email link remain separate gates.
 - Every data method validates a random, server-hashed session token and the
   active user's role. Hiding buttons in the browser is not treated as access
   control.
@@ -63,7 +64,8 @@ sheet is the runtime allowlist. Re-running setup updates the seeded users.
    `Admin Sessions`, and `Admin Audit`, plus six appended admin columns on
    `Leads`. Existing lead columns and rows are retained.
 7. Deploy as a web app that executes as the deploying owner and is accessible
-   to anyone. The app performs its own allowlist and session checks.
+   to anyone signed into Google. The app performs its own allowlist and session
+   checks after Google's sign-in gate.
 8. Store the `/exec` URL in the private service register and share it only with
    authorised staff. Do not add it to the public website navigation.
 

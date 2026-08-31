@@ -9,7 +9,7 @@ to work directly in rows and columns.
 
 ```text
 Authorised staff browser
-  → request one-time email link
+  → pass Google sign-in gate and request one-time email link
   → Apps Script verifies private allowlist and sends 15-minute token
   → token is redeemed once for an eight-hour tab session
   → every server request rechecks session, active user and role
@@ -19,7 +19,10 @@ Authorised staff browser
   └─ read-only GA4 Data API reports
 ```
 
-The portal is a second Apps Script project. Keeping it separate prevents
+The portal URL is absent from the public website, sitemap, Search Console and
+Business Profile, and the page is `noindex`. A signed-in Google account is
+required before it loads; only a privately allowlisted account can receive and
+redeem a magic link. The portal is a second Apps Script project. Keeping it separate prevents
 changes to authentication, Analytics scopes or staff UI from destabilising the
 already verified public lead endpoint.
 

@@ -13,7 +13,7 @@
     "https://analyticsdata.googleapis.com/"
   ],
   "webapp": {
-    "access": "ANYONE_ANONYMOUS",
+    "access": "ANYONE",
     "executeAs": "USER_DEPLOYING"
   }
 }

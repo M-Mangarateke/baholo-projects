@@ -51,11 +51,12 @@ The Apps Script `/exec` URL is public by design. Security comes from strict
 validation, abuse controls and owner-only data access—not from treating the URL
 as a password.
 
-The admin `/exec` URL is also reachable before login so email magic links can
-open it. Reachability is not authorisation: anonymous methods can only request
-or redeem bounded tokens, and every lead/Analytics method validates the active
-user and permission server-side. Because the admin app executes as its owner,
-never return `ScriptApp.getOAuthToken()` or another Google credential to HTML.
+The admin `/exec` URL is not linked publicly, is `noindex`, and requires Google
+sign-in before Apps Script loads it. Reachability is still not authorisation:
+login methods can only request or redeem bounded tokens, and every
+lead/Analytics method validates the private active user and permission
+server-side. Because the admin app executes as its owner, never return
+`ScriptApp.getOAuthToken()` or another Google credential to HTML.
 
 ## Account and permission rules
 

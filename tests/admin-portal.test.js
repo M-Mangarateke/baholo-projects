@@ -38,7 +38,7 @@ assert.match(indexHtml, /noindex, nofollow, noarchive/);
 assert.doesNotMatch(indexHtml, /<script\s+src=/i);
 
 assert.equal(manifest.webapp.executeAs, 'USER_DEPLOYING');
-assert.equal(manifest.webapp.access, 'ANYONE_ANONYMOUS');
+assert.equal(manifest.webapp.access, 'ANYONE');
 assert.ok(manifest.oauthScopes.includes('https://www.googleapis.com/auth/analytics.readonly'));
 assert.ok(manifest.oauthScopes.includes('https://www.googleapis.com/auth/spreadsheets'));
 assert.ok(manifest.oauthScopes.includes('https://www.googleapis.com/auth/script.send_mail'));
