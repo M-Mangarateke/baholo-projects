@@ -19,10 +19,11 @@ Authorised staff browser
   └─ read-only GA4 Data API reports
 ```
 
-The portal URL is absent from the public website, sitemap, Search Console and
-Business Profile, and the page is `noindex`. A signed-in Google account is
-required before it loads; only a privately allowlisted account can receive and
-redeem a magic link. The portal is a second Apps Script project. Keeping it separate prevents
+The private staff entry point is `https://www.baholoprojects.co.za/baholooperations/`.
+It is not linked from the public website, sitemap, Search Console or Business
+Profile, and both the entry point and portal are `noindex`. A signed-in Google
+account is required before the portal loads; only a privately allowlisted
+account can receive and redeem a magic link. The portal is a second Apps Script project. Keeping it separate prevents
 changes to authentication, Analytics scopes or staff UI from destabilising the
 already verified public lead endpoint.
 
@@ -30,6 +31,8 @@ already verified public lead endpoint.
 
 - passwordless sign-in with a generic response that does not reveal whether an
   account exists;
+- a permanent, bookmarkable company-domain entry point from which staff can
+  request their own 15-minute sign-in link whenever needed;
 - overview counts for new, active, due and won enquiries;
 - searchable, paginated enquiry table with status, service, assignee and
   priority filters;

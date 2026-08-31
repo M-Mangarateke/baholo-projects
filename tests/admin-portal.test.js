@@ -11,9 +11,15 @@ const serverPath = path.join(root, 'apps-script-admin', 'Code.gs');
 const clientPath = path.join(root, 'apps-script-admin', 'App.html');
 const indexPath = path.join(root, 'apps-script-admin', 'Index.html');
 const manifestPath = path.join(root, 'apps-script-admin', 'appsscript.json');
+const entryPath = path.join(root, 'baholooperations', 'index.html');
+const publicIndexPath = path.join(root, 'index.html');
+const sitemapPath = path.join(root, 'sitemap.xml');
 const serverSource = fs.readFileSync(serverPath, 'utf8');
 const clientHtml = fs.readFileSync(clientPath, 'utf8');
 const indexHtml = fs.readFileSync(indexPath, 'utf8');
+const entryHtml = fs.readFileSync(entryPath, 'utf8');
+const publicIndexHtml = fs.readFileSync(publicIndexPath, 'utf8');
+const sitemapXml = fs.readFileSync(sitemapPath, 'utf8');
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 
 new Function(serverSource);
@@ -36,6 +42,10 @@ assert.match(serverSource, /function setupAdmin_\(/);
 assert.doesNotMatch(serverSource, /const\s+(?:SPREADSHEET_ID|OWNER_EMAIL|ADMIN_EMAIL)\s*=/);
 assert.match(indexHtml, /noindex, nofollow, noarchive/);
 assert.doesNotMatch(indexHtml, /<script\s+src=/i);
+assert.match(entryHtml, /noindex, nofollow, noarchive, nosnippet/);
+assert.match(entryHtml, /https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec/);
+assert.doesNotMatch(publicIndexHtml, /baholooperations/i);
+assert.doesNotMatch(sitemapXml, /baholooperations/i);
 
 assert.equal(manifest.webapp.executeAs, 'USER_DEPLOYING');
 assert.equal(manifest.webapp.access, 'ANYONE');
