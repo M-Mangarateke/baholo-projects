@@ -43,7 +43,7 @@
     "@type": ["Organization", "ProfessionalService"],
     "@id": "https://www.baholoprojects.co.za/#organization",
     "name": "Baholo Projects (Pty) Ltd",
-    "alternateName": "Baholo Projects",
+    "alternateName": ["Baholo Projects", "Baholo"],
     "url": "https://www.baholoprojects.co.za/",
     "logo": "https://www.baholoprojects.co.za/assets/icons/icon-512.png",
     "foundingDate": "2016",
@@ -96,7 +96,7 @@
     "@id": "https://www.baholoprojects.co.za/#website",
     "url": "https://www.baholoprojects.co.za/",
     "name": "Baholo Projects",
-    "alternateName": "Baholo Projects (Pty) Ltd",
+    "alternateName": ["Baholo", "Baholo Projects (Pty) Ltd", "baholoprojects.co.za"],
     "publisher": {"@id": "https://www.baholoprojects.co.za/#organization"},
     "inLanguage": "en-ZA"
   }
@@ -115,7 +115,7 @@
         "isPartOf": {"@id": "https://www.baholoprojects.co.za/#website"},
         "about": {"@id": "https://www.baholoprojects.co.za/#organization"},
         "inLanguage": "en-ZA",
-        "dateModified": "2026-08-30"
+        "dateModified": "2026-08-31"
       },
       {
         "@type": "Service",
@@ -176,6 +176,11 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is Baholo the same company as Baholo Projects?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Yes. Baholo is the short brand name used for Baholo Projects (Pty) Ltd, a South African industrial supply and project services company."}
+      },
       {
         "@type": "Question",
         "name": "What services does Baholo Projects provide?",
@@ -298,7 +303,7 @@
       <div class="intro-body reveal">
         <div class="about-copy__lead">
           <p class="about-copy__label"><span aria-hidden="true"></span>Company profile</p>
-          <p class="lead">Founded in 2016 and formally registered in 2019, Baholo Projects is a South African Level 1 B-BBEE company serving small and large organisations with dependable industrial supply, practical project support and skilled workmanship.</p>
+          <p class="lead">Founded in 2016 and formally registered in 2019, Baholo Projects—also known simply as Baholo—is a South African Level 1 B-BBEE company serving small and large organisations with dependable industrial supply, practical project support and skilled workmanship.</p>
         </div>
         <div class="about-copy__details">
           <p>Led by founder and Managing Director Tshegofatso Goitseone Molapisi, the business supports industrial supply, welding and fabrication, consulting, scaffolding and pipework-focused requirements. Each engagement begins by understanding the client specification, site conditions and expected result before the final scope is confirmed.</p>
@@ -624,6 +629,10 @@
         </div>
       </figure>
       <div class="faq-list">
+        <details class="reveal">
+          <summary>Is Baholo the same company as Baholo Projects?<span></span></summary>
+          <p>Yes. Baholo is the short brand name used for Baholo Projects (Pty) Ltd, a South African industrial supply and project services company.</p>
+        </details>
         <details class="reveal">
           <summary>What services does Baholo Projects provide?<span></span></summary>
           <p>Industrial supplies, welding and fabrication, consulting and scaffolding, with pipework supply and installation as an industrial focus.</p>

@@ -46,6 +46,12 @@ The production homepage now provides these consistent signals:
 - matching Open Graph and Twitter metadata on the production hostname;
 - a public sitemap and permissive robots file.
 
+On 31 August 2026, the homepage was strengthened with the truthful short brand
+name `Baholo` in visible company copy, a matching visible FAQ, Organization and
+WebSite `alternateName` values, and the machine-readable company summary. This
+helps Google connect searches for `Baholo` with Baholo Projects without keyword
+stuffing or pretending the generic one-word query is guaranteed.
+
 Google decides the final title, snippet and favicon. A successful sitemap
 submission or indexing request is not a guarantee of indexing or of an
 immediate visual update. Recrawling and reprocessing can take days or weeks.
@@ -108,6 +114,10 @@ For the first four weeks after launch, check Search Console weekly:
 - Sitemaps: read date, status and discovered-page count.
 - Performance: brand and service queries, clicks, impressions, click-through
   rate and canonical landing pages.
+- Query comparison: monitor `baholo`, `Baholo Projects`, misspellings and
+  relevant service-plus-location queries separately. Use actual impressions
+  and positions to decide what factual content or external entity references
+  need improvement.
 - Core Web Vitals: mobile and desktop issues once field data is available.
 - Enhancements: structured-data errors or warnings.
 - Security and manual actions: review immediately if either report changes.

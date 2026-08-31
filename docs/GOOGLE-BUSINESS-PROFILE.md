@@ -53,5 +53,11 @@ to 20 named areas; do not use the entire country merely as a keyword.
 6. Review special hours before South African public holidays.
 7. Link the verified profile to GA4 only after the correct profile is visible.
 
+Verification and consistent public facts are important entity signals for the
+short `Baholo` query. Keep the profile name as the real-world business name
+`Baholo Projects`; do not rename it to a keyword phrase. The website now
+truthfully explains that `Baholo` is the short brand name, and authoritative
+profiles should use the same identity where their fields allow it.
+
 Do not create a duplicate profile. Verification status and later edits must be
 recorded privately because the managing Google account is not documented here.
