@@ -2544,6 +2544,16 @@ body.dialog-open {
   clip-path: inset(0);
 }
 
+/* Give the FAQ photography a calmer, more deliberate entrance than other media. */
+.js .faq .media-unfold.reveal {
+  transition-duration: .35s;
+}
+
+.js .faq .media-unfold.reveal .media-unfold__inner {
+  transition-duration: 1.65s;
+  transition-delay: .08s;
+}
+
 @media (max-width: 1120px) {
   .desktop-nav a { min-width: 5.8rem; padding-inline: .8rem; }
   .header-contact { width: 6.25rem; }
