@@ -92,7 +92,7 @@
               </select>
             </label>
           </header>
-          <div class="analytics-status" data-analytics-status>Loading website data…</div>
+          <div class="analytics-status" data-analytics-status role="status">Loading website data…</div>
           <div data-analytics-content hidden>
             <div class="analytics-metrics">
               <div><span>Active users</span><strong data-ga-metric="activeUsers">0</strong></div>
@@ -111,6 +111,18 @@
               </article>
             </div>
             <div class="data-table-grid">
+              <article class="compact-table-card">
+                <header><h3>Organic search</h3><p>Consented GA4 sessions and completed enquiries by search engine.</p></header>
+                <div class="compact-table"><table><thead><tr><th scope="col">Engine</th><th scope="col">Sessions</th><th scope="col">Enquiries</th></tr></thead><tbody data-organic-rows></tbody></table></div>
+                <p class="organic-note" data-organic-note hidden></p>
+              </article>
+              <article class="compact-table-card">
+                <header><h3>Search visibility</h3><p>Use each provider for its search impressions, clicks, indexing and AI visibility reports.</p></header>
+                <div class="search-reports">
+                  <a href="https://search.google.com/search-console/performance/search-analytics?resource_id=sc-domain%3Abaholoprojects.co.za" target="_blank" rel="noopener">Google Search Console</a>
+                  <a href="https://www.bing.com/webmasters/" target="_blank" rel="noopener">Bing Webmaster Tools</a>
+                </div>
+              </article>
               <article class="compact-table-card">
                 <header><h3>Top pages</h3><p>Pages visitors viewed most</p></header>
                 <div class="compact-table"><table><thead><tr><th>Page</th><th>Views</th><th>Users</th></tr></thead><tbody data-page-rows></tbody></table></div>

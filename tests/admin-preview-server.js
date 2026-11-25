@@ -15,7 +15,7 @@ const mockData = {
     options: {
       statuses: ['New', 'Contacted', 'Qualified', 'Quoted', 'Won', 'Lost', 'Closed'],
       priorities: ['Normal', 'High', 'Urgent'],
-      services: ['Industrial supplies', 'Welding & fabrication', 'Consulting', 'Scaffolding', 'Other'],
+      services: ['Industrial supplies', 'Welding & fabrication', 'Pipework and installation', 'Consulting', 'Scaffolding', 'Other'],
       assignees: [
         { email: 'admin@example.test', name: 'Naledi Dlamini', role: 'administrative_officer', roleLabel: 'Administrative Officer' },
         { email: 'operations@example.test', name: 'Lerato Mokoena', role: 'operations_manager', roleLabel: 'Operations Manager' }
@@ -44,6 +44,11 @@ const mockData = {
       { name: 'lead_form_start', count: 17, keyEvents: 0 }, { name: 'lead_form_submit_attempt', count: 11, keyEvents: 0 },
       { name: 'generate_lead', count: 9, keyEvents: 9 }
     ],
+    organicSearch: {
+      available: true,
+      thresholdApplied: false,
+      rows: [{ engine: 'Google', sessions: 63, leads: 4 }, { engine: 'Bing', sessions: 13, leads: 1 }]
+    },
     generatedAt: '2026-08-31T12:00:00.000Z'
   }
 };

@@ -10,6 +10,7 @@ const BAHOLO = Object.freeze({
   SERVICES: Object.freeze([
     'Industrial supplies',
     'Welding & fabrication',
+    'Pipework and installation',
     'Consulting',
     'Scaffolding',
     'Other'

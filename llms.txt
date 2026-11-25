@@ -1,32 +1,18 @@
 # Baholo Projects
 
-Baholo Projects (Pty) Ltd, also known simply as Baholo, is a South African Level 1 B-BBEE company founded in 2016 by Tshegofatso Goitseone Molapisi, the company's Founder and Managing Director, and formally registered in 2019.
+> Baholo Projects (Pty) Ltd, also known as Baholo, is an industrial services company based in Johannesburg, Gauteng, South Africa. Tshegofatso Goitseone Moleko founded it in 2016, and the company was formally registered in 2019. It is a Level 1 B-BBEE contributor.
 
-## Services
+## Industrial services
 
-- Industrial supplies: pipes, valves, pumps, fittings, bolts, nuts and other industrial components supplied to project requirements.
-- Welding and fabrication: fabrication, modification and practical design of new and existing systems.
-- Consulting: practical support to clarify industrial, fabrication and project requirements before delivery.
-- Scaffolding: temporary access services scoped to the site and project brief.
+- [Industrial supply and procurement](https://www.baholoprojects.co.za/#industrial-supplies): Pipes, fittings, flanges, valves, pumps, fasteners, steel, welding consumables, instrumentation and other industrial equipment.
+- [Welding and fabrication](https://www.baholoprojects.co.za/#welding-fabrication): Stainless and carbon steel fabrication, industrial components, pipework, equipment modifications and repairs.
+- [Pipework and installation](https://www.baholoprojects.co.za/#pipework): Pipe preparation and fitting, valves, flanges, supports, tie-ins and maintenance.
+- [Scaffolding services](https://www.baholoprojects.co.za/#scaffolding): Erection and dismantling of temporary access scaffolding for industrial work.
+- [Industrial consulting and project support](https://www.baholoprojects.co.za/#industrial-consulting): Requirements assessment, material identification, procurement and coordination of fabrication and installation.
 
-## Pipework
+## Company and enquiries
 
-Baholo Projects supplies pipework components and provides installation supported by fabrication or modification where required. The website explains five common considerations: connecting equipment, control and measurement points, branch distribution, overhead routing, and coordination around vessels and access structures.
-
-Exact pipe type, material, size, service conditions, fittings, supports, joining method, tie-ins, testing and installation approach are confirmed during scoping and quotation. The supplied photographs are used as educational visual references rather than project case studies.
-
-## Customers
-
-Baholo Projects serves small and large enterprises in South Africa.
-
-## Selected client experience
-
-Baholo Projects has worked with Heineken. No project scope, dates or outcomes are published.
-
-## Leadership and contact
-
-- Founder and Managing Director: Tshegofatso Goitseone Molapisi
-- Administrative Officer: Kgahlisho Koitheng
-- Email: info@baholoprojects.co.za
-- Operating hours: Monday to Friday, 08:00–16:00; closed Saturday and Sunday
-- Website: https://www.baholoprojects.co.za/
+- [About Baholo Projects](https://www.baholoprojects.co.za/#about): Company history and experience, including previous work with Heineken.
+- [How Baholo works](https://www.baholoprojects.co.za/#approach): Understand the requirement, plan, quote, deliver and hand over.
+- [Frequently asked questions](https://www.baholoprojects.co.za/#faq): Service scope, combined supply and installation, site coverage and quoting.
+- [Request a quote](https://www.baholoprojects.co.za/#contact): Share the site location, what you need, specifications and timing. Call +27 67 616 8687 or email info@baholoprojects.co.za. Enquiry hours are Monday to Friday, 08:00–16:00 SAST.

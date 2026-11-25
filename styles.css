@@ -1661,13 +1661,13 @@ body.dialog-open {
   grid-column: 1 / -1;
   align-self: end;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   border-top: 1px solid var(--line);
 }
 
 .approach-flow article {
   min-height: 18rem;
-  padding: 2.2rem var(--gutter);
+  padding: 2.2rem clamp(1.25rem, 3vw, 3.5rem);
   border-right: 1px solid var(--line);
 }
 
@@ -1857,7 +1857,7 @@ body.dialog-open {
 .principles-rail {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .principles-rail span {

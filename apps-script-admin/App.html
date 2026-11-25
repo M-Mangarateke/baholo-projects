@@ -10,7 +10,8 @@
       filters: { page: 1, pageSize: 50 },
       leadPage: null,
       leadsLoaded: false,
-      analyticsLoaded: false
+      analyticsLoaded: false,
+      analyticsRequest: 0
     };
 
     const one = (selector, root = document) => root.querySelector(selector);
@@ -305,6 +306,8 @@
 
     async function loadAnalytics(force = false) {
       if (state.analyticsLoaded && !force) return;
+      const request = ++state.analyticsRequest;
+      state.analyticsLoaded = false;
       const status = one('[data-analytics-status]');
       const content = one('[data-analytics-content]');
       status.hidden = false;
@@ -313,6 +316,7 @@
       try {
         const range = Number(one('[data-analytics-range]').value);
         const result = await server('getAdminAnalytics', state.sessionToken, range);
+        if (request !== state.analyticsRequest) return;
         const data = unwrap(result);
         if (!data.available) {
           status.textContent = data.message;
@@ -323,6 +327,7 @@
         status.hidden = true;
         content.hidden = false;
       } catch (error) {
+        if (request !== state.analyticsRequest) return;
         handleRequestError(error, 'Website analytics could not be loaded.');
         status.textContent = error.message || 'Website analytics could not be loaded.';
       }
@@ -334,8 +339,9 @@
         if (target) target.textContent = formatNumber(data.summary[key]);
       });
       renderTrafficBars(data.trend || []);
+      renderOrganicSearch(data.organicSearch);
       const channels = data.channels || [];
-      const channelTotal = Math.max(1, channels.reduce((sum, item) => sum + Number(item.sessions || 0), 0));
+      const channelTotal = Math.max(1, Number(data.summary.sessions || 0));
       one('[data-channel-list]').innerHTML = channels.map((item) => {
         const share = Math.max(0, Math.min(100, (Number(item.sessions || 0) / channelTotal) * 100));
         return `<li><div class="channel-row"><span>${esc(item.channel)}</span><strong>${formatNumber(item.sessions)} <small>${Math.round(share)}%</small></strong></div><span class="channel-track" aria-hidden="true"><i style="width:${share.toFixed(1)}%"></i></span></li>`;
@@ -348,6 +354,19 @@
       };
       const meaningful = (data.events || []).filter((item) => labels[item.name]);
       one('[data-event-rows]').innerHTML = meaningful.map((item) => `<tr><td>${esc(labels[item.name])}<br><small>${esc(item.name)}</small></td><td>${formatNumber(item.count)}</td><td>${formatNumber(item.keyEvents)}</td></tr>`).join('') || '<tr><td colspan="3">No tracked business events in this period.</td></tr>';
+    }
+
+    function renderOrganicSearch(report) {
+      const rows = one('[data-organic-rows]');
+      const note = one('[data-organic-note]');
+      note.hidden = !report?.thresholdApplied;
+      note.textContent = report?.thresholdApplied ? 'Google Analytics applied privacy thresholds. A dash indicates a missing count in a thresholded report.' : '';
+      if (!report?.available) {
+        rows.innerHTML = '<tr><td colspan="3">The organic search breakdown is currently unavailable.</td></tr>';
+        return;
+      }
+      const count = (value) => value == null ? '—' : formatNumber(value);
+      rows.innerHTML = report.rows.map((item) => `<tr><th scope="row">${esc(item.engine)}</th><td>${count(item.sessions)}</td><td>${count(item.leads)}</td></tr>`).join('');
     }
 
     function renderTrafficBars(points) {

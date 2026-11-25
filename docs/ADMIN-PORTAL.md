@@ -82,3 +82,24 @@ unified public-site visual system, official logo treatment, branded magic-link
 email and bar-chart Analytics presentation. Exact recovery and validation steps
 are in
 [`apps-script-admin/README.md`](../apps-script-admin/README.md).
+
+## Google and Bing organic reporting
+
+The Organic search table uses the selected GA4 date range and session
+source/medium values `google / organic` and `bing / organic`. Its enquiry
+column counts `generate_lead` events per session source. The same consent and
+duplicate-suppression rules as the rest of the GA4 dashboard apply. A missing
+row in a thresholded response appears as a dash. An unavailable breakdown
+leaves the other GA4 reports visible.
+
+The Search visibility panel opens Google Search Console and Bing Webmaster
+Tools for provider-reported impressions, clicks, indexing and AI visibility.
+Open the Baholo property in each provider and use comparable date ranges.
+Search Console, Bing Webmaster Tools and GA4 have different scopes,
+attribution and data freshness. Search clicks and GA4 sessions measure
+different steps of the visit.
+
+Deploy and verify the lead receiver's new `Pipework and installation` service
+value before adding it to the public enquiry form. Deploy the staff app as a
+separate version so staff can select and filter that value and see the new
+reports. Older stored categories remain valid.

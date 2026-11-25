@@ -26,7 +26,7 @@ const ADMIN = Object.freeze({
   LEAD_ADMIN_HEADERS: Object.freeze(['Updated at', 'Assigned to', 'Priority', 'Next action at', 'Last updated by', 'Revision']),
   LEAD_STATUSES: Object.freeze(['New', 'Contacted', 'Qualified', 'Quoted', 'Won', 'Lost', 'Closed']),
   LEAD_PRIORITIES: Object.freeze(['Normal', 'High', 'Urgent']),
-  SERVICES: Object.freeze(['Industrial supplies', 'Welding & fabrication', 'Consulting', 'Scaffolding', 'Other'])
+  SERVICES: Object.freeze(['Industrial supplies', 'Welding & fabrication', 'Pipework and installation', 'Consulting', 'Scaffolding', 'Other'])
 });
 
 /**
@@ -523,8 +523,63 @@ function loadAnalytics_(rangeDaysValue) {
     events: reportRows_(eventsReport).map((row) => ({
       name: row.dimensions[0] || 'Unknown event', count: numberValue_(row.metrics[0]), keyEvents: numberValue_(row.metrics[1])
     })),
+    organicSearch: loadOrganicSearch_(propertyId, dateRange),
     generatedAt: new Date().toISOString()
   };
+}
+
+function loadOrganicSearch_(propertyId, dateRanges) {
+  const engines = [
+    { name: 'Google', sourceMedium: 'google / organic' },
+    { name: 'Bing', sourceMedium: 'bing / organic' }
+  ];
+  const sourceFilter = {
+    filter: {
+      fieldName: 'sessionSourceMedium',
+      inListFilter: { values: engines.map((engine) => engine.sourceMedium), caseSensitive: false }
+    }
+  };
+  const request = { dateRanges, dimensions: [{ name: 'sessionSourceMedium' }] };
+  try {
+    const sessions = runGaReport_(propertyId, {
+      ...request,
+      dimensionFilter: sourceFilter,
+      metrics: [{ name: 'sessions' }]
+    });
+    const leads = runGaReport_(propertyId, {
+      ...request,
+      dimensionFilter: {
+        andGroup: { expressions: [
+          sourceFilter,
+          { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'generate_lead' } } }
+        ] }
+      },
+      metrics: [{ name: 'eventCount' }]
+    });
+
+    const countsBySource = (report) => {
+      const counts = new Map();
+      reportRows_(report).forEach((row) => {
+        const source = row.dimensions[0].toLowerCase();
+        counts.set(source, (counts.get(source) || 0) + numberValue_(row.metrics[0]));
+      });
+      return counts;
+    };
+    const sessionsBySource = countsBySource(sessions);
+    const leadsBySource = countsBySource(leads);
+    return {
+      available: true,
+      thresholdApplied: Boolean(sessions.metadata?.subjectToThresholding || leads.metadata?.subjectToThresholding),
+      rows: engines.map((engine) => ({
+        engine: engine.name,
+        sessions: sessionsBySource.get(engine.sourceMedium) ?? (sessions.metadata?.subjectToThresholding ? null : 0),
+        leads: leadsBySource.get(engine.sourceMedium) ?? (leads.metadata?.subjectToThresholding ? null : 0)
+      }))
+    };
+  } catch (error) {
+    console.error('GA4 organic search breakdown is unavailable.');
+    return { available: false };
+  }
 }
 
 function runGaReport_(propertyId, body) {

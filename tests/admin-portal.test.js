@@ -82,4 +82,26 @@ assert.throws(() => vm.runInContext(`validateLeadPatch_({nextActionAt:'10\/09\/2
 assert.equal(vm.runInContext(`normaliseFilters_({page:'-4',pageSize:'1000'}).page`, context), 1);
 assert.equal(vm.runInContext(`normaliseFilters_({page:'2',pageSize:'1000'}).pageSize`, context), 100);
 
+const gaRow = (source, count) => ({
+  dimensionValues: [{ value: source }],
+  metricValues: [{ value: String(count) }]
+});
+const requestedReports = [];
+context.runGaReport_ = (_property, request) => {
+  requestedReports.push(request);
+  if (request.metrics[0].name === 'sessions') {
+    return { rows: [gaRow('google / organic', 48), gaRow('Google / organic', 10)] };
+  }
+  return { rows: [gaRow('google / organic', 4)], metadata: { subjectToThresholding: true } };
+};
+const organic = JSON.parse(vm.runInContext(`JSON.stringify(loadOrganicSearch_('123', [{startDate:'6daysAgo',endDate:'today'}]))`, context));
+assert.deepEqual(organic, {
+  available: true,
+  thresholdApplied: true,
+  rows: [{ engine: 'Google', sessions: 58, leads: 4 }, { engine: 'Bing', sessions: 0, leads: null }]
+});
+assert.equal(requestedReports[0].dateRanges[0].startDate, '6daysAgo');
+assert.equal(requestedReports[1].dimensionFilter.andGroup.expressions[1].filter.stringFilter.value, 'generate_lead');
+assert.equal(vm.runInContext(`normaliseFilters_({service:'Pipework and installation'}).service`, context), 'Pipework and installation');
+
 console.log('Admin portal security and syntax checks passed.');
