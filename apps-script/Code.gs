@@ -88,7 +88,7 @@ function doGet() {
     .createTextOutput(JSON.stringify({
       ok: true,
       service: 'Baholo Projects lead endpoint',
-      version: '2026-08-30'
+      version: '2026-11-25'
     }))
     .setMimeType(ContentService.MimeType.JSON);
 }
